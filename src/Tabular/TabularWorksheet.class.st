@@ -104,6 +104,11 @@ TabularWorksheet >> cellValuesAsMatrix [
 ]
 
 { #category : #accessing }
+TabularWorksheet >> cells [ 
+^ cells
+]
+
+{ #category : #accessing }
 TabularWorksheet >> cellsAsMatrix [
 	| matrix rowMax colMax |
 	colMax := self maxNumberOfColumns.

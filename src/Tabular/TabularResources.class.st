@@ -49,7 +49,7 @@ TabularResources class >> createTestNamed: aName fromFileNamed: aFile [
 { #category : #'example creation' }
 TabularResources class >> example1Creation [
 
-self createTestNamed: 'testExcelFile1OneSheetOnly' fromFileNamed: (FileLocator home / self fileNameOfExample1)
+self createTestNamed: 'testExcelFile1OneSheetOnly' fromFileNamed: (FileLocator home / self fileNameOfExample1)  
 
 ]
 

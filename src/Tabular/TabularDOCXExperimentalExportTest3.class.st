@@ -175,7 +175,7 @@ TabularDOCXExperimentalExportTest3 >> test1 [
 aWorkbook := TabularWorkbook new.
 aWorkbook addSheet: (self class sampleWorksheetWith2RowsAnd3Columns).
 
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'testExport3Write7.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'testExport3Write7.docx') fullName .
 ]
 
 { #category : #'as yet unclassified' }
@@ -186,7 +186,7 @@ TabularDOCXExperimentalExportTest3 >> test2ExportThreeColumnTable [
 aWorkbook := TabularWorkbook new.
 aWorkbook addSheet: (self class sampleWorksheetWith2RowsAnd3Columns).
 
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test2ExportThreeColumnTable.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test2ExportThreeColumnTable.docx') fullName .
 ]
 
 { #category : #'as yet unclassified' }
@@ -203,7 +203,7 @@ aWorksheet	 at: 1 @ 1 putData: 'one';
 		at: 4 @ 1 putData: 'four'.
 
 aWorkbook addSheet: aWorksheet.
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test3ExportFourColumnTable.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test3ExportFourColumnTable.docx') fullName .
 ]
 
 { #category : #'as yet unclassified' }
@@ -220,7 +220,7 @@ aWorksheet	 at: 1 @ 1 putData: 11;
 		at: 4 @ 1 putData: 31.
 
 aWorkbook addSheet: aWorksheet.
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test4Export3TableWithNumbers.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test4Export3TableWithNumbers.docx') fullName.
 ]
 
 { #category : #'as yet unclassified' }
@@ -240,5 +240,5 @@ aWorksheet	 at: 1 @ 1 putData: 11;
 		at: 4 @ 1 putData: 31.
 aWorksheet name: 'The second worksheet'.
 aWorkbook addSheet: aWorksheet.
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test5Export3WriteTwoWorksheets.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test5Export3WriteTwoWorksheets.docx') fullName .
 ]

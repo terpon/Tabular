@@ -71,7 +71,7 @@ TabularXLSXExport class >> example2 [
 self halt. "does not work yet"
 self workbook: (TabularWorkbook example1) fileName: 'TabularTest2Export.xlsx'.
 
-workbook := XLSXImporter import: (FileLocator home / 'TabularTest2Export.xlsx') asFileReference.
+workbook := XLSXImporter import: (FileLocator home / 'TabularTest2Export.xlsx') fullName .
 
 self workbook: (TabularWorkbook example1) fileName: 'TabularTest2ExportAndReimported.xlsx'.
 ]

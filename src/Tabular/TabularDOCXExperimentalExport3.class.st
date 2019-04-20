@@ -26,7 +26,7 @@ TabularDOCXExperimentalExport3 class >> createTemplateNamed: aName fromFileNamed
 { #category : #'as yet unclassified' }
 TabularDOCXExperimentalExport3 class >> example1Creation [
 
-self createTestNamed: 'tabularTestTable' fromFileNamed: (FileLocator home / 'tabularTestTable.docx')
+self createTestNamed: 'tabularTestTable' fromFileNamed: (FileLocator home / 'tabularTestTable.docx') fullName 
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,7 +37,7 @@ TabularDOCXExperimentalExport3 class >> example1Write [
 aStream := self tabularTestTable readStream.
 archive := ZipArchive new readFrom: aStream.
 
-archive writeToFileNamed: (FileLocator home / 'testExport3Write1.docx')
+archive writeToFileNamed: (FileLocator home / 'testExport3Write1.docx') fullName 
 
 ]
 

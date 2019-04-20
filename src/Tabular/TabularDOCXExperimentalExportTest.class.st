@@ -39,11 +39,11 @@ TabularDOCXExperimentalExportTest >> setUp [
 	  dir := FileLocator temp.  
 	"use temporary directory to put the exported test files."
 
-       fname1 := dir / 'TabularDOCX1Exported.zip'. 
-       fname2 := dir / 'TabularDOCX2Exported.docx'. 
-	fname3 := dir / 'TabularDOCX3Exported.docx'. 
-	fname4 := dir / 'TabularDOCX4Exported.docx'. 
-	fname5 := dir / 'TabularDOCX5Exported.docx'. 
+       fname1 := (dir / 'TabularDOCX1Exported.zip') fullName . 
+       fname2 := ( dir / 'TabularDOCX2Exported.docx') fullName. 
+	fname3 := (dir / 'TabularDOCX3Exported.docx')fullName. 
+	fname4 := (dir / 'TabularDOCX4Exported.docx')fullName. 
+	fname5 := (dir / 'TabularDOCX5Exported.docx')fullName. 
 	
 
 ]
@@ -69,7 +69,7 @@ TabularDOCXExperimentalExportTest >> test2 [
 "Basic code to create an initial DOCX file. File does not open. It is 'corrupt' "
 
 | theString theContentString |
-fname2 ensureDelete.
+fname2 asFileReference  ensureDelete.
 theString := '<?xml version="1.0" encoding="UTF-8"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
 <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
@@ -90,7 +90,7 @@ TabularDOCXExperimentalExportTest >> test3 [
 "Basic code to create a DOCX file. It opens but content supplied with document.xml is incomplete"
 
 | theString theContentString theRelsString |
-fname3 ensureDelete.
+fname3 asFileReference  ensureDelete.
 theString := '<?xml version="1.0" encoding="UTF-8"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
 <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
