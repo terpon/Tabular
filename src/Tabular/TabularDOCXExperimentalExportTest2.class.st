@@ -127,7 +127,7 @@ TabularDOCXExperimentalExportTest2 >> relsString [
 { #category : #setUp }
 TabularDOCXExperimentalExportTest2 >> setUp [
   
-	fname6 := FileLocator temp / 'TabularDOCX6Exported.docx'. 
+	fname6 := (FileLocator temp / 'TabularDOCX6Exported.docx') fullName. 
 
 	
 
@@ -151,7 +151,7 @@ TabularDOCXExperimentalExportTest2 >> stylesString [
 
 { #category : #test }
 TabularDOCXExperimentalExportTest2 >> test [
-self setUp. fname6 ensureDelete.
+self setUp. fname6 asFileReference ensureDelete.
 zip:= ZipArchive new. 
 zip addString: self contentTypesString as: '[Content_Types].xml'.
 zip addString: self relsString as: '_rels/.rels'.
