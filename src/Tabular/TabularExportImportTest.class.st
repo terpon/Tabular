@@ -72,7 +72,7 @@ TabularExportImportTest >> testExport1CellAccess [
 	| wbk  wimported cell ws |
 
 	wbk := XLSXImporter import: TabularResources testExcelFile1OneSheetOnly  readStream.
-	"fname ensureDelete."
+	fname asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname.
 
 	wimported := XLSXImporter import: fname.
