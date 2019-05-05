@@ -330,15 +330,15 @@ TabularWorksheet >> showWithGlamour [
 TabularWorksheet >> showWithSpec [
 	| matrix tree specCols |
 	matrix := self cellValuesAsMatrix.
-	tree := TreeModel new.
+	tree := TreePresenter new.
 	specCols := (1 to: matrix columnCount)
 		collect: [ :i | 
-			TreeColumnModel new
+			TreeColumnPresenter new
 				displayBlock: [ :node | (node content at: i) asString ];
 				headerLabel: i asString;
 				yourself ].
 	tree columns: specCols.
-	tree roots: ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
-	tree openWithSpec.
-
+	tree
+		roots: ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
+	tree openWithSpec
 ]
