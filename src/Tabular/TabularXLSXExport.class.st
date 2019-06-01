@@ -471,7 +471,8 @@ TabularXLSXExport >> workbook_xml [
 	w := self newXMLWriter.
 	(w tag: 'workbook')
 		xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
-		xmlnsAt: 'r' put: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+		xmlnsAt: 'r'
+			put: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
 		with: [ w tag: 'fileVersion' attributes: {(#appName -> 'Tabular')}.
 			w
 				tag: 'workbookPr'
@@ -495,10 +496,11 @@ TabularXLSXExport >> workbook_xml [
 								tag: 'sheet'
 								attributes:
 									{(#name -> each name).
+									"write the state each sheet, must be improved case creation"
+									(#state -> (workbook sheetsState at: each name , '_state')).
 									(#sheetId -> index printString).
-									(#state -> 'visible').
 									(#r:id -> ('rId' , (index + 2) printString))} ] ] ].
-	^w contents
+	^ w contents
 ]
 
 { #category : #files }

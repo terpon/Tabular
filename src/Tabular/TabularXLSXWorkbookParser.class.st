@@ -16,5 +16,13 @@ TabularXLSXWorkbookParser >> registeredElements [
 
 { #category : #'as yet unclassified' }
 TabularXLSXWorkbookParser >> sheet_start: properties [
-	parsingStack top at: (properties at: #r:id) put: (properties at: #name)
+	parsingStack top
+		at: (properties at: #r:id)
+		put: (properties at: #name).
+	properties
+		at: #state
+		ifPresent: [ parsingStack top
+				at: (properties at: #name) , '_state'
+				put: (properties at: #state) ]
+		ifAbsent: [ parsingStack top at: (properties at: #name) , '_state' put: 'visible' ]
 ]

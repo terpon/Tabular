@@ -342,3 +342,13 @@ TabularWorksheet >> showWithSpec [
 		roots: ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
 	tree openWithSpec
 ]
+
+{ #category : #'accessing structure variables' }
+TabularWorksheet >> state [ 
+self attributeAt: #state 
+]
+
+{ #category : #'accessing structure variables' }
+TabularWorksheet >> state: anObject [
+	self attributeAt: #state put: anObject asString
+]

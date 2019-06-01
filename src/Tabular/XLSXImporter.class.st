@@ -109,11 +109,19 @@ XLSXImporter >> extractWorksheets [
 
 { #category : #extracting }
 XLSXImporter >> extractWorksheetsList [
-| list |
-	list:=TabularXLSXWorkbookParser parse: (archive memberNamed: 'xl/workbook.xml') contentStream.
-	sheetsToExtract ifNotNil:[list := list associationsSelect: [:assoc| sheetsToExtract includes: assoc value] ].
-	^list.
-
+	| list |
+	list := TabularXLSXWorkbookParser
+		parse: (archive memberNamed: 'xl/workbook.xml') contentStream.
+	workbook sheetsState: list copy.
+	workbook sheetsState
+		do: [ :x | 
+			x = 'visible'
+				ifFalse: [ x = 'hidden'
+						ifFalse: [ list removeKey: x , '_state' ] ] ].
+	sheetsToExtract
+		ifNotNil: [ list := list
+				associationsSelect: [ :assoc | sheetsToExtract includes: assoc value ] ].
+	^ list
 ]
 
 { #category : #extracting }

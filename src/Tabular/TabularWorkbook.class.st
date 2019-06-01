@@ -28,7 +28,8 @@ Class {
 	#instVars : [
 		'worksheets',
 		'styles',
-		'strings'
+		'strings',
+		'sheetsState'
 	],
 	#category : #'Tabular-Model'
 }
@@ -100,7 +101,18 @@ TabularWorkbook >> filename: anObject [
 { #category : #initialization }
 TabularWorkbook >> initialize [
 	super initialize.
-	worksheets := OrderedCollection new
+	worksheets := OrderedCollection new.
+	sheetsState :=StandardOrderedDictionary new.
+]
+
+{ #category : #accessing }
+TabularWorkbook >> sheetsState [
+	^ sheetsState
+]
+
+{ #category : #accessing }
+TabularWorkbook >> sheetsState: adico [
+sheetsState := adico.
 ]
 
 { #category : #accessing }
