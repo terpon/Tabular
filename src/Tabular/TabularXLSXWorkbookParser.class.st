@@ -10,8 +10,13 @@ TabularXLSXWorkbookParser >> buildRootObject [
 ]
 
 { #category : #'as yet unclassified' }
+TabularXLSXWorkbookParser >> definedName_start: properties [
+	parsingStack top
+]
+
+{ #category : #'as yet unclassified' }
 TabularXLSXWorkbookParser >> registeredElements [
-	^ #(sheet)
+	^ #(sheet definedName)
 ]
 
 { #category : #'as yet unclassified' }

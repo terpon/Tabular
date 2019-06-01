@@ -29,7 +29,8 @@ Class {
 		'worksheets',
 		'styles',
 		'strings',
-		'sheetsState'
+		'sheetsState',
+		'definedNames'
 	],
 	#category : #'Tabular-Model'
 }
@@ -86,6 +87,17 @@ TabularWorkbook >> addSheet: aTabularWorksheet [
 TabularWorkbook >> containsWorksheetNamed: aString [
 	self worksheetNamed: aString ifNone: [ ^ false ].
 	^ true
+]
+
+{ #category : #accessing }
+TabularWorkbook >> definedNames [
+^ definedNames
+
+]
+
+{ #category : #accessing }
+TabularWorkbook >> definedNames: andefinedNames [
+definedNames := andefinedNames 
 ]
 
 { #category : #'accessing - attributes' }

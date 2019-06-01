@@ -52,10 +52,15 @@ TabularXMLWriter >> renderCell: coord [
 	cell := worksheet cellAt: coord.
 	^ cell data isNumber
 		ifTrue: [ self renderCellWithNumber: coord ]
-		ifFalse: [ 
-			(cell data isKindOf: Date)
+		ifFalse: [ (cell data isKindOf: Date)
 				ifTrue: [ self renderCellWithDate: coord ]
-				ifFalse: [ self renderCellWithString: coord ] ]
+				ifFalse:[( cell data isNil ) ifTrue: [ self renderCellNil: coord]
+				ifFalse: [ self renderCellWithString: coord ] ] ]
+]
+
+{ #category : #rendering }
+TabularXMLWriter >> renderCellNil: coord [
+	self subclassResponsibility
 ]
 
 { #category : #rendering }

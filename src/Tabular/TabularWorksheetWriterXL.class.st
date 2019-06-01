@@ -41,6 +41,16 @@ TabularWorksheetWriterXL >> mergeCells [
 ]
 
 { #category : #rendering }
+TabularWorksheetWriterXL >> renderCellNil: coord [
+	"write empty cell"
+	writer tag
+		name: 'c';
+		attributeAt: 'r' put: (self cellName: coord)
+		
+
+]
+
+{ #category : #rendering }
 TabularWorksheetWriterXL >> renderCellWithDate: coord [
 	writer tag
 		name: 'c';
