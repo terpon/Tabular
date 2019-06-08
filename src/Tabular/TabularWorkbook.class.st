@@ -91,13 +91,12 @@ TabularWorkbook >> containsWorksheetNamed: aString [
 
 { #category : #accessing }
 TabularWorkbook >> definedNames [
-^ definedNames
-
+	^ definedNames 
 ]
 
 { #category : #accessing }
 TabularWorkbook >> definedNames: andefinedNames [
-definedNames := andefinedNames 
+	definedNames add: andefinedNames
 ]
 
 { #category : #'accessing - attributes' }
@@ -114,7 +113,13 @@ TabularWorkbook >> filename: anObject [
 TabularWorkbook >> initialize [
 	super initialize.
 	worksheets := OrderedCollection new.
-	sheetsState :=StandardOrderedDictionary new.
+	sheetsState := StandardOrderedDictionary new.
+	definedNames := Set new
+]
+
+{ #category : #testing }
+TabularWorkbook >> isTabularWorkbook [
+	^ true
 ]
 
 { #category : #accessing }

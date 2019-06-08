@@ -499,7 +499,17 @@ TabularXLSXExport >> workbook_xml [
 									"write the state each sheet, must be improved case creation"
 									(#state -> (workbook sheetsState at: each name , '_state')).
 									(#sheetId -> index printString).
-									(#r:id -> ('rId' , (index + 2) printString))} ] ] ].
+									(#r:id -> ('rId' , (index + 2) printString))} ] ].
+			" save defined names"
+			workbook definedNames
+				ifNotEmpty: [ w
+						tag: 'definedNames'
+						with: [ workbook definedNames
+								do: [ :each | 
+									w
+										tag: 'definedName'
+										attributes: {(#name -> each name)}
+										with: each content ] ] ] ].
 	^ w contents
 ]
 

@@ -84,6 +84,11 @@ TabularObject >> isTabularCell [
 ]
 
 { #category : #testing }
+TabularObject >> isTabularWorkbook [
+	^ false
+]
+
+{ #category : #testing }
 TabularObject >> isTabularWorksheet [
 	^false.
 ]

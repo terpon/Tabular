@@ -90,10 +90,9 @@ TabularXLSXSheetParser >> guessType: aString [
 { #category : #initialization }
 TabularXLSXSheetParser >> initialize [
 	super initialize.
-	colCounter := 1.
+		colCounter := 1.
 	rowCounter := 1.
-	columnAttributes := OrderedCollection new.
-
+columnAttributes := OrderedCollection new.
 ]
 
 { #category : #'as yet unclassified' }

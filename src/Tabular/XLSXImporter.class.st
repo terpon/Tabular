@@ -109,10 +109,20 @@ XLSXImporter >> extractWorksheets [
 
 { #category : #extracting }
 XLSXImporter >> extractWorksheetsList [
+	" the list var is the final result "
 	| list |
 	list := TabularXLSXWorkbookParser
 		parse: (archive memberNamed: 'xl/workbook.xml') contentStream.
+	" copy as original "
 	workbook sheetsState: list copy.
+	" step 1 : treat the definedName in workbook"
+	workbook sheetsState
+		keysDo: [ :k | 
+			(k asString matchesRegex: 'defname_' , '\w*')
+				ifTrue: [ list removeKey: k.
+					workbook definedNames: (workbook sheetsState at: k) ] ].
+	workbook sheetsState: list copy.
+	" step 2: treat  the attribute state"
 	workbook sheetsState
 		do: [ :x | 
 			x = 'visible'
