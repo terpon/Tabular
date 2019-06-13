@@ -59,7 +59,7 @@ TabularObject class >> newFrom: aTabularWorkbook [
 
 { #category : #'accessing - attributes' }
 TabularObject >> attributeAt: aKeySymbol [
-	^attributes at: aKeySymbol ifAbsent: nil. "Better default values management needed"
+	^ attributes at: aKeySymbol ifAbsent: nil	"Better default values management needed"
 ]
 
 { #category : #'accessing - attributes' }

@@ -467,7 +467,7 @@ TabularXLSXExport >> styles_xml [
 TabularXLSXExport >> workbook_xml [
 	"self new workbook: (TabularWorkbook new addSheet: TabularWorksheet new); workbook_xml"
 
-	| w |
+	| w c |
 	w := self newXMLWriter.
 	(w tag: 'workbook')
 		xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
@@ -506,10 +506,15 @@ TabularXLSXExport >> workbook_xml [
 						tag: 'definedNames'
 						with: [ workbook definedNames
 								do: [ :each | 
-									w
-										tag: 'definedName'
-										attributes: {(#name -> each name)}
-										with: each content ] ] ] ].
+									" on tag chaque attribut"
+									c := nil.
+									c := {(#name -> each name)}.
+									each isPresenthidden
+										ifTrue: [ c := c , {(#hidden -> each hidden)} ].
+									each isPresentlocalSheetId
+										ifTrue: [ c := c , {(#localSheetId -> each localSheetId)} ].
+									" on sauve "
+									w tag: 'definedName' attributes: c with: each content ] ] ] ].
 	^ w contents
 ]
 

@@ -51,6 +51,18 @@ TabularDefinedNames >> hidden: aBoolean [
 ]
 
 { #category : #accessing }
+TabularDefinedNames >> isPresenthidden [
+	(self attributeAt: #hidden) ifNil: [ ^ false ].
+	^ true
+]
+
+{ #category : #accessing }
+TabularDefinedNames >> isPresentlocalSheetId [
+	(self attributeAt: #localSheetId) ifNil: [ ^ false ].
+	^ true
+]
+
+{ #category : #accessing }
 TabularDefinedNames >> localSheetId [
 	^ self attributeAt: #localSheetId
 ]
