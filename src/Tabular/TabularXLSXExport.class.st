@@ -192,31 +192,31 @@ TabularXLSXExport >> docPropsCore_xml [
 
 { #category : #files }
 TabularXLSXExport >> generate [
-	
-	zip addString: self content_types_xml as: '[Content_Types].xml'.
-	zip addString: self rels as: '_rels/.rels'.
+	zip addDeflateString: self content_types_xml as: '[Content_Types].xml'.
+	zip addDeflateString: self rels as: '_rels/.rels'.
+	zip addDeflateString: self docPropsApp_xml as: 'docProps/app.xml'.
+	zip addDeflateString: self docPropsCore_xml as: 'docProps/core.xml'.
 
-	zip addString: self docPropsApp_xml as: 'docProps/app.xml'.
-	zip addString: self docPropsCore_xml as: 'docProps/core.xml'.
-
-    "Everything outside the xl/ folder is just meta data"
+	"Everything outside the xl/ folder is just meta data"
 	self countSharedStrings.
-	zip addString: self sharedStrings_xml  as: 'xl/sharedStrings.xml'.
-	zip addString: self styles_xml as: 'xl/styles.xml'.
-	zip addString: self workbook_xml as: 'xl/workbook.xml'.
-	zip addString: self workbook_xml_rels as: 'xl/_rels/workbook.xml.rels'.
+	zip addDeflateString: self sharedStrings_xml as: 'xl/sharedStrings.xml'.
+	zip addDeflateString: self styles_xml as: 'xl/styles.xml'.
+	zip addDeflateString: self workbook_xml as: 'xl/workbook.xml'.
+	zip
+		addDeflateString: self workbook_xml_rels
+		as: 'xl/_rels/workbook.xml.rels'.
 	workbook worksheets
 		doWithIndex: [ :worksheet :index | 
 			zip
-				addString: (TabularWorksheetWriterXL for: worksheet)
+				addDeflateString: (TabularWorksheetWriterXL for: worksheet)
 				as: 'xl/worksheets/sheet' , index printString , '.xml' ].
-	
-	self writeZip.
+	self writeZip
 ]
 
 { #category : #initialize }
 TabularXLSXExport >> initialize [
 	zip := ZipArchive new
+
 ]
 
 { #category : #files }
@@ -272,17 +272,20 @@ TabularXLSXExport >> relsFor: associations [
 { #category : #files }
 TabularXLSXExport >> sharedStrings_xml [
 	"we don't maintain the string table within the workbook during processing, but build it only for writing"
+
 	| w |
 	w := self newXMLWriter.
 	(w tag: 'sst')
 		xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
-		attributes: { #count -> totalSharedStrings printString. #uniqueCount -> sharedStrings size printString };
-		with: [
-			sharedStrings do: [ :each |
-				w tag: 'si' with: [ 
-					w tag: 't' attributes: {  #xml:space -> 'preserve' } with: each ] ]
-			].
-	^w contents
+		attributes:
+			{(#count -> totalSharedStrings printString).
+			(#uniqueCount -> sharedStrings size printString)};
+		with: [ sharedStrings
+				do: [ :each | 
+					w
+						tag: 'si'
+						with: [ w tag: 't' attributes: {(#xml:space -> 'preserve')} with: each  asString] ] ].
+	^ w contents
 ]
 
 { #category : #'files-styles-xml' }
