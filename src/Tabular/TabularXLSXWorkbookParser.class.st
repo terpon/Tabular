@@ -32,15 +32,14 @@ TabularXLSXWorkbookParser >> definedName_start: properties [
 	properties at: 'hidden' ifPresent: [ :n | defname hidden: n ].
 	properties
 		at: 'localSheetId'
-		ifPresent: [ :n | defname localSheetId: n ].
-				"
-				parsingStack top at: 'defname_' , defcounter asString put: defname"
+		ifPresent: [ :n | defname localSheetId: n ]
+
 ]
 
 { #category : #'as yet unclassified' }
 TabularXLSXWorkbookParser >> definedNames_start [
-defcounter := 1.
-	
+" initialize counter"
+	defcounter := 1
 ]
 
 { #category : #initialization }

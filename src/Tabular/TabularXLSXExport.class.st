@@ -512,9 +512,21 @@ TabularXLSXExport >> workbook_xml [
 									" on tag chaque attribut"
 									c := nil.
 									c := {(#name -> each name)}.
-									each isPresenthidden
+									(each isPresent: #comment)
+										ifTrue: [ c := c , {(#comment -> each comment)} ].
+									(each isPresent: #customerMenu)
+										ifTrue: [ c := c , {(#customerMenu -> each customerMenu)} ].
+									(each isPresent: #description)
+										ifTrue: [ c := c , {(#description -> each description)} ].
+									(each isPresent: #function)
+										ifTrue: [ c := c , {(#function -> each function)} ].
+									(each isPresent: #vbProcedure)
+										ifTrue: [ c := c , {(#vbProcedure -> each vbProcedure)} ].
+									(each isPresent: #xlm)
+										ifTrue: [ c := c , {(#xlm -> each xlm)} ].
+									(each isPresent: #hidden)
 										ifTrue: [ c := c , {(#hidden -> each hidden)} ].
-									each isPresentlocalSheetId
+									(each isPresent: #localSheetId)
 										ifTrue: [ c := c , {(#localSheetId -> each localSheetId)} ].
 									" on sauve "
 									w tag: 'definedName' attributes: c with: each content ] ] ] ].
