@@ -1,6 +1,3 @@
-"
-A TabularTableWriterWordMLTest is a test class for testing the behavior of TabularTableWriterWordML
-"
 Class {
 	#name : #TabularTableWriterWordMLTest,
 	#superclass : #TestCase,

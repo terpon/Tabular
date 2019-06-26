@@ -1,23 +1,3 @@
-"
-I am a TabularXLSXSheetParser and parse the XML of a sheet. See test case for an example. I am only interested in certain elements and ignore the rest. The elements I am interested in are defined in #registeredElements. I returen a TabularWorksheet object.
-
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-TabularXLSXSheetParser parse: anXMLString.
-   
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	colCounter:		<Object>
-	rowCounter:		<Object>
-
-
-    Implementation Points
-"
 Class {
 	#name : #TabularXLSXSheetParser,
 	#superclass : #TabularSAXParser,

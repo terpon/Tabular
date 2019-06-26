@@ -1,9 +1,9 @@
 "
-I  represent a single cell in a Worksheet.
+Instance Variables
+	data:		<Object>
 
-Responsibility:
-I provide access to the value, formula, style and formatting information.  The encoding of this information follows the format used by the document type, i.e. XLSX or ODS.
 
+    Implementation Points
 "
 Class {
 	#name : #TabularCell,

@@ -1,15 +1,12 @@
 "
-create instance of definedNamed stored in a Dictionary
-this a specific class for workbook
+definamedName in workbook
 
     Instance Variables
 	comment:		<Object>
+	content:		<Object>
 	customerMenu:		<Object>
 	description:		<Object>
 	function:		<Object>
-	hidden:		<Object>
-	localSheetId:		<Object>
-	name:		<Object>
 	vbProcedure:		<Object>
 	xlm:		<Object>
 

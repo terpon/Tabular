@@ -1,40 +1,8 @@
 "
-See TabularCell for description and responsibilities.
-
-Standard:
-
-p. 1600
-18.3.1.4 Cell
-
-Example
-<row r=""1"" spans=""1:1"">
-<c r=""A1"" t=""inlineStr"">
-<is><t>This is inline string example</t></is>
-</c>
-</row>
-
-s attribute is style index,
-t attribute is cell data type; values are on p. 2444, 18.18.11
-
-b boolean
-d date
-e error
-inlineStr (inline string)
-n number
-s shared string
-str (formula string)
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- what is the way to create instances is a plus.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
+Instance Variables
+	formula:		<Object>
+	style:		<Object>
+	type:		<Object>
 
 
     Implementation Points

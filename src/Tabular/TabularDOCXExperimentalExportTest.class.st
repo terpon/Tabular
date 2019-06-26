@@ -1,15 +1,3 @@
-"
-I am TabularDOCXExperimentalExportTest to test the construction of DOCX files which contain tables.
-
-test1 and test2 are demos to show the basics of a ZIP (DOCX) file creation.
-
-This is an attempt to find  out the meaningful number of parts to create a DOCX file.
-
-See TabularDOCXExperimentalExportTest3 for the creation of a complete DOCX file.
-
-
-UTF8 needs attention.
-"
 Class {
 	#name : #TabularDOCXExperimentalExportTest,
 	#superclass : #TestCase,

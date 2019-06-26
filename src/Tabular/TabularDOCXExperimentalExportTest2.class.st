@@ -1,10 +1,3 @@
-"
-I am TabularDOCXExperimentalExportTest2 to test the construction of DOCX files which contain tables.
-
-The zip archive is constructed from several parts given as strings. There might be more than the necessary parts but this has not been tested yet.
-
-UTF8 needs attention.
-"
 Class {
 	#name : #TabularDOCXExperimentalExportTest2,
 	#superclass : #TestCase,
