@@ -1,3 +1,9 @@
+"
+am TabularDOCXExperimentalExport3 
+An example DOCX file (zip) has been read and stored on the class side.
+When exporting only the file document.xml in the zip archive is generated.
+
+"
 Class {
 	#name : #TabularDOCXExperimentalExport3,
 	#superclass : #TabularExport,

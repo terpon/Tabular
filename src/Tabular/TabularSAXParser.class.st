@@ -1,3 +1,24 @@
+"
+TabularSAXParser is engine for even-simpler SAX-style XML parsing.
+It was made for using by TabularImporter subclasses for XML-based speadsheets formats, but really it is not linked with Tabular at all, and may be used for other purposes aswell.
+=========
+Short manual:
+1) Subclass me
+2) implement a #registeredElements with the collection of tag names you are interested in
+3) implement methods like #sometag_start: , #sometag_end , #sometag_characters: - you should substitute #sometag with one of the registered names
+4) implement a #buildRootObject method, which will build...ehh...root object for you generated DOM
+Methods from step 3 will be called as usual #startElement: , #endElements and #characters: for SAX parsers, but only for the tags with the appropriate names.
+
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	parsingStack:		<Object>
+	saxStack:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularSAXParser,
 	#superclass : #SAXHandler,

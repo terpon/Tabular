@@ -1,3 +1,20 @@
+"
+I am a TabularWorkbook the model for a spreadsheet file.
+TabularWorkbook example1
+
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	definedNames:		<Object>
+	sheetsState:		<Object>
+	strings:		<Object>
+	styles:		<Object>
+	worksheets:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularWorkbook,
 	#superclass : #TabularObject,

@@ -1,4 +1,25 @@
 "
+See TabularCell for description and responsibilities.
+Standard:
+p. 1600
+18.3.1.4 Cell
+Example
+<row r=""""1"""" spans=""""1:1"""">
+<c r=""""A1"""" t=""""inlineStr"""">
+<is><t>This is inline string example</t></is>
+</c>
+</row>
+s attribute is style index,
+t attribute is cell data type; values are on p. 2444, 18.18.11
+b boolean
+d date
+e error
+inlineStr (inline string)
+n number
+s shared string
+str (formula string)
+
+
 Instance Variables
 	formula:		<Object>
 	style:		<Object>

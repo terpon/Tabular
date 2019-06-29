@@ -1,3 +1,15 @@
+"
+to comment 
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	worksheet:		<Object>
+	writer:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularXMLWriter,
 	#superclass : #Object,

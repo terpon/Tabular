@@ -1,3 +1,20 @@
+"
+I am TabularResources and keep example Excel files in binary format and offer a service to create them.
+
+
+More examples see
+http://www.openoffice.org/sc/testdocs/index.html (the links marked with 'XML')
+
+https://github.com/GNOME/gnumeric
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	odswb01:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularResources,
 	#superclass : #TestResource,

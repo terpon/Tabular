@@ -1,3 +1,11 @@
+"
+his class exist as a placeholder for the original class which was slightly wrongly named (XSLX instead of XLSX). The actual exporter has been renamed.
+ 
+Internal Representation and Key Implementation Points.
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularXSLXExport,
 	#superclass : #Object,

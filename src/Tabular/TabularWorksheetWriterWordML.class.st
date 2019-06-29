@@ -1,3 +1,11 @@
+"
+to comment 
+ 
+Internal Representation and Key Implementation Points.
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularWorksheetWriterWordML,
 	#superclass : #TabularXMLWriter,

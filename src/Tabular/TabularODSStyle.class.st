@@ -1,3 +1,6 @@
+"
+to comment 
+"
 Class {
 	#name : #TabularODSStyle,
 	#superclass : #TabularStyle,

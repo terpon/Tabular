@@ -1,3 +1,15 @@
+"
+to comment 
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	defcounter:		<Object>
+	defname:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularXLSXWorkbookParser,
 	#superclass : #TabularSAXParser,

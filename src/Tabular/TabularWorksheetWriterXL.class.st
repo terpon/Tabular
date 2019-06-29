@@ -1,3 +1,14 @@
+"
+I am TabularWorksheetWriter and generate the XML for a worksheet.
+For the Class part:  State the name of the class with one line description: For example, I'm xxx the root of the hierarchy of visitor objects.
+For the Responsibility part: Three sentences about my main responsibility, what I'm doing, what services do I offer.
+For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
+ 
+Internal Representation and Key Implementation Points.
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularWorksheetWriterXL,
 	#superclass : #TabularXMLWriter,
