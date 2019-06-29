@@ -19,6 +19,7 @@ Class {
 TabularXLSXExportTest >> setUp [
     
 	| dir |
+	super setUp.
 	wsheetNumbersInRow1 := TabularWorksheet new.
 	wsheetNumbersInRow1
 		at: 1 @ 1 putData: 11;

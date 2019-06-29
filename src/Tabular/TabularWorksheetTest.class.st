@@ -9,6 +9,7 @@ Class {
 
 { #category : #setUp }
 TabularWorksheetTest >> setUp [
+	super setUp.
 	ws := TabularWorksheet new.
 ]
 
@@ -76,7 +77,7 @@ TabularWorksheetTest >> testCellsReadingWritingInteger [
 TabularWorksheetTest >> testCellsReadingWritingString [
 
 	ws col: 7 row: 12 putData: 'aTest'.
-	self assert: ((ws col: 7 row: 12) data = 'aTest').
+	self assert: (ws col: 7 row: 12) data equals: 'aTest'.
 	
 ]
 
@@ -88,8 +89,10 @@ ws at: 4@4 putData: 3. ws at: 6@4 putData: 4.
 
 ws compactify.
 
-self assert: ((ws dataAt: 1@1) = 1). self assert: ((ws dataAt: 3@1) = 2).
-self assert: ((ws dataAt: 2@2) = 3). self assert: ((ws dataAt: 4@2) = 4).
+self assert: (ws dataAt: 1@1) equals: 1.
+self assert: (ws dataAt: 3@1) equals: 2.
+self assert: (ws dataAt: 2@2) equals: 3.
+self assert: (ws dataAt: 4@2) equals: 4.
 
 
 ]
@@ -117,7 +120,7 @@ TabularWorksheetTest >> testFindCellsWithContent [
 
     result := ws findCellsWithContent: 'Lille'.
     self assert: (result isKindOf: Dictionary).
-    self assert: (result size =2).
+    self assert: result size equals:2.
 
 
 ]
@@ -133,7 +136,7 @@ TabularWorksheetTest >> testFindCellsWithContent2 [
 
     result := ws findCellsWithContent: 'll'.
     self assert: (result isKindOf: Dictionary).
-    self deny: (result size =2).
+    self deny: result size equals:2.
 
 
 ]
@@ -161,7 +164,7 @@ TabularWorksheetTest >> testMaxNumberOfColumns0 [
 TabularWorksheetTest >> testName [
 
  self assert: (ws name notNil).  
- self assert: (ws name = 'New sheet').  
+ self assert: ws name equals: 'New sheet'.  
 
 ]
 
