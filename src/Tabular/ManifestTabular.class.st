@@ -13,8 +13,23 @@ ManifestTabular class >> manuallyResolvedDependencies [
 ]
 
 { #category : #'code-critics' }
+ManifestTabular class >> ruleRBBadMessageRuleV1FalsePositive [
+	^ #(#(#(#RGPackageDefinition #(#Tabular)) #'2019-06-29T18:03:35.984801+02:00') #(#(#RGClassDefinition #(#TabularExportImportTest)) #'2019-06-29T18:03:49.364706+02:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestTabular class >> ruleRBCollectionMessagesToExternalObjectRuleV1FalsePositive [
+	^ #(#(#(#RGPackageDefinition #(#Tabular)) #'2019-06-29T18:03:06.887062+02:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestTabular class >> ruleRBLiteralArrayContainsSuspiciousTrueFalseOrNilRuleV1FalsePositive [
+	^ #(#(#(#RGPackageDefinition #(#Tabular)) #'2019-06-29T17:40:47.769212+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestTabular class >> ruleRBLongMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#TabularXLSXExport #workbook_xml #false)) #'2019-06-12T15:51:33.779745+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#TabularXLSXExport #workbook_xml #false)) #'2019-06-12T15:51:33.779745+02:00') #(#(#RGPackageDefinition #(#Tabular)) #'2019-06-29T18:06:46.80007+02:00') )
 ]
 
 { #category : #'code-critics' }

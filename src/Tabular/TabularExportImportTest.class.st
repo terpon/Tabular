@@ -33,9 +33,11 @@ Class {
 
 { #category : #setUp }
 TabularExportImportTest >> setUp [
-
     | dir |
-     dir := FileLocator temp  .  "use temporary directory to put the exported test files."
+	 
+	 super setUp.
+     	   
+	 dir := FileLocator temp  .  "use temporary directory to put the exported test files."
                                           "FileLocator home  is an alternative"
 
     fname0 := (dir / 'TabularEmptySheetExported.xlsx') fullName.      
@@ -76,11 +78,11 @@ TabularExportImportTest >> testExport1CellAccess [
 	TabularXLSXExport workbook: wbk fileName: fname.
 
 	wimported := XLSXImporter import: fname.
-	ws := (wimported worksheetNamed: 'Sheet1').
+	ws := wimported worksheetNamed: 'Sheet1'.
 	self assert: (ws allCoord includes: 3@9).
 	cell := ws at: 3@9.
 	self assert: (cell notNil).
-	self assert: (cell data = 39).
+	self assert: cell data equals: 39.
 	
 ]
 
@@ -139,7 +141,7 @@ TabularExportImportTest >> testExport1SheetName2 [
 { #category : #'as yet unclassified' }
 TabularExportImportTest >> testExport2 [
 
-|  wbk wimported |
+|  wbk |
 	wbk := XLSXImporter import: TabularResources testExcelFile2withThreeSheets   readStream.
 		
 	TabularXLSXExport workbook: wbk fileName: fname2.
@@ -187,8 +189,8 @@ TabularExportImportTest >> testExport4Numbers [
 	wimported := XLSXImporter import: fname4.
 	cell := ((wimported worksheetNamed: nameOfSheet) at: 1@1).
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= '11').
-	self assert: (cell data = 11).  "cell data is aString but should be a number"
+	self assert: cell data asString equals: '11'.
+	self assert: cell data equals: 11.  "cell data is aString but should be a number"
 ]
 
 { #category : #'tests-numbers' }
@@ -210,7 +212,7 @@ TabularExportImportTest >> testExport4NumbersStringContent [
 	wimported := XLSXImporter import: fname4.
 	cell := wimported worksheets first at: 1@1.
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= '11').  "content OK"
+	self assert: cell data asString equals: '11'.  "content OK"
      "cell data is aString but should be a number"
 ]
 
@@ -232,7 +234,7 @@ TabularExportImportTest >> testExport4Strings [
 	wimported := XLSXImporter import: fname4.
 	cell := wimported worksheets first cellAt:  1@1.
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= 'abc 11').
+	self assert: cell data asString equals: 'abc 11'.
 ]
 
 { #category : #'tests-strings' }
@@ -249,10 +251,10 @@ TabularExportImportTest >> testExport5 [
 	wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= 'abc 11').
+	self assert: cell data asString equals:  'abc 11'.
 	cell := wsheetimported at: 2 @ 1.
 		self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data = 21).
+	self assert: cell data equals: 21.
 
 
 ]
@@ -281,13 +283,13 @@ wbkimported := XLSXImporter import: fname6.
  
      wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 123).
+	self assert: cell data equals: 123.
 
 	wsheetimported := wbkimported worksheets second.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 456).
+	self assert: cell data equals: 456.
 	cell := wsheetimported at: 1 @ 2.
-	self assert: (cell data = 'abc').
+	self assert: cell data equals: 'abc'.
 ]
 
 { #category : #'tests-strings' }
@@ -299,13 +301,13 @@ TabularExportImportTest >> testExport6aImportTwoWorksheets [
  
      wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 123).
+	self assert: cell data equals: 123.
 
 	wsheetimported := wbkimported worksheets second.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 456).
+	self assert: cell data equals: 456.
 	cell := wsheetimported at: 1 @ 2.
-	self assert: (cell data = 'abc').
+	self assert: cell data equals: 'abc'.
 ]
 
 { #category : #'tests-strings' }
@@ -338,17 +340,17 @@ wbkimported := XLSXImporter import: fname7 .
  
      wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 123).
+	self assert: cell data equals: 123.
 
 	wsheetimported := wbkimported worksheets second.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 456).
+	self assert: cell data equals: 456.
 	cell := wsheetimported at: 1 @ 2.
-	self assert: (cell data = 'abc').
+	self assert: cell data equals: 'abc'.
 	
 	wsheetimported := wbkimported worksheets third.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 789).
+	self assert: cell data equals: 789.
 ]
 
 { #category : #'tests-strings' }

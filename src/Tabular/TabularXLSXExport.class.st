@@ -200,6 +200,7 @@ TabularXLSXExport >> generate [
 
 { #category : #initialize }
 TabularXLSXExport >> initialize [
+	super initialize.
 	zip := ZipArchive new
 
 ]
@@ -480,14 +481,27 @@ TabularXLSXExport >> workbook_xml [
 				tag: 'sheets'
 				with: [ workbook worksheets
 						doWithIndex: [ :each :index | 
-							w
+							" generate the list of worksheet with local"
+						  |t f |
+									
+									t := nil.
+									t := {(#name -> each name)}.
+									"write the state each sheet, must be improved case creation
+									try to find a sheeState"
+									f:=false.
+									workbook sheetsState keysDo: [ :x | x = (each name,'_state') ifTrue: [f:=true. ]].
+									f ifTrue:  [ t:= t, {(#state -> (workbook sheetsState at: each name , '_state')) }].
+								   "ifFalse: no attribute"
+									t:=t,{(#sheetId -> index printString)}.
+									t:=t,{(#r:id -> ('rId' , (index + 2) printString))}.
+									
+								 
+						w							
 								tag: 'sheet'
-								attributes:
-									{(#name -> each name).
-									"write the state each sheet, must be improved case creation"
-									(#state -> (workbook sheetsState at: each name , '_state')).
-									(#sheetId -> index printString).
-									(#r:id -> ('rId' , (index + 2) printString))} ] ].
+								attributes: t.
+							
+							]
+						].
 			" save defined names"
 			workbook definedNames
 				ifNotEmpty: [ w
