@@ -200,7 +200,7 @@ TabularXLSXExport >> generate [
 
 { #category : #initialize }
 TabularXLSXExport >> initialize [
-	super initialize.
+
 	zip := ZipArchive new
 
 ]
@@ -210,7 +210,7 @@ TabularXLSXExport >> newXMLWriter [
 	"create a new XML writer that emits the proper XML declaration and pretty-prints output."
 	| w |
 	w := XMLWriter new enablePrettyPrinting.
-	w xml encoding: 'UTF-8'; standalone: true.
+	w xml encoding: 'utf8'; standalone: true.
 	^w
 ]
 
@@ -218,8 +218,9 @@ TabularXLSXExport >> newXMLWriter [
 TabularXLSXExport >> newXMLWriterForRels [
 	"create a new XML writer that emits the proper XML declaration (without standalone attribute) and pretty-prints output."
 	| w |
-	w := XMLWriter new enablePrettyPrinting.
-	w xml encoding: 'UTF-8'.
+	w := XMLWriter new .
+	"be careful encodin not UTF-8 but utf8" 
+	w xml encoding: 'utf8'; standalone: true.
 	^w
 ]
 
@@ -267,10 +268,21 @@ TabularXLSXExport >> sharedStrings_xml [
 			{(#count -> totalSharedStrings printString).
 			(#uniqueCount -> sharedStrings size printString)};
 		with: [ sharedStrings
-				do: [ :each | 
-					w
+				do: [ :each |
+					|s|
+					s := each lastSpacePosition . 
+					
+					s > 0 ifTrue: [
+						w
 						tag: 'si'
-						with: [ w tag: 't' attributes: {(#xml:space -> 'preserve')} with: each  asString] ] ].
+						with: [ w tag: 't'  attributes: {(#xml:space -> 'preserve')} with: (each utf8Encoded) asString ] ].
+						"with: [ w tag: 't'  with: each   ] ] ]."
+					s = 0 ifTrue: [ 	
+						w
+						tag: 'si'
+						"with: [ w tag: 't'  attributes: {(#xml:space -> 'preserve')} with: each ] ] ]."
+						with:  [ w tag: 't'  with: (each utf8Encoded) asString ] ] .
+				]].
 	^ w contents
 ]
 

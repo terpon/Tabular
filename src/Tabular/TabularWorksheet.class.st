@@ -129,6 +129,7 @@ TabularWorksheet >> cellsKeysAndValuesDo: aBlock [
 TabularWorksheet >> cleanup [
 "Removes the cells without data.
 MIND: empty cells may still contain formatting"
+" remove stringTable of the cell"
 	cells keysAndValuesRemove: [ :coord :cell| cell data isNil ].
 
 ]
@@ -312,9 +313,9 @@ TabularWorksheet >> show [
 TabularWorksheet >> showWithGlamour [
 	| wrapper matrix table |
 	matrix := self cellValuesAsMatrix.
-	wrapper := GLMWrapper new.
+	wrapper := GLMCompositePresentation  new.
 	wrapper
-		show: [ :a | 
+		with:  [ :a | 
 			table := a table.
 			1 to: matrix columnCount do: [ :i | table column: i asString evaluated: [ :col | col at: i ] width: 50 ] ].
 	wrapper title: 'Worksheet: ', self name asString.
@@ -325,17 +326,18 @@ TabularWorksheet >> showWithGlamour [
 TabularWorksheet >> showWithSpec [
 	| matrix tree specCols |
 	matrix := self cellValuesAsMatrix.
-	tree := TreePresenter new.
+	tree := SpTablePresenter new.
 	specCols := (1 to: matrix columnCount)
 		collect: [ :i | 
-			TreeColumnPresenter new
-				displayBlock: [ :node | (node content at: i) asString ];
-				headerLabel: i asString;
+			SpCompositeTableColumn  new
+				evaluated:  [ :node | (node content at: i) asString ];
+				title:  i asString;
 				yourself ].
 	tree columns: specCols.
 	tree
-		roots: ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
-	tree openWithSpec
+		"roots:  ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ])."
+			items:   #(1 4 2 3 5 8 7 9); beResizable.
+	tree openWithSpec 
 ]
 
 { #category : #'accessing structure variables' }

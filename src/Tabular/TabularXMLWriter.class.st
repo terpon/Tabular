@@ -45,15 +45,15 @@ TabularXMLWriter >> columnName: n [
 { #category : #rendering }
 TabularXMLWriter >> contents [
 
-    ^ writer write contents convertToEncoding: 'utf-8'
+    ^ writer write contents convertToEncoding: 'utf8'
 ]
 
 { #category : #initalize }
 TabularXMLWriter >> initialize [
-
+	
 	writer isNil ifTrue: [writer := XMLWriter new].
 	writer enablePrettyPrinting.
-	writer xml standalone: true.
+	writer xml  standalone: true.
 	
 
 ]
