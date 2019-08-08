@@ -93,7 +93,7 @@ TabularWorksheet >> cellValuesAsMatrix [
 	| matrix rowMax colMax |
 	colMax := self maxNumberOfColumns.
 	rowMax := self maxNumberOfRows.
-	matrix := Matrix rows: rowMax columns: colMax.
+	matrix := Array2D  rows: rowMax columns: colMax.
 	cells associationsDo: [ :assoc | matrix at: assoc key y at: assoc key x put: assoc value value ].
 	^ matrix
 ]
@@ -324,20 +324,47 @@ TabularWorksheet >> showWithGlamour [
 
 { #category : #opening }
 TabularWorksheet >> showWithSpec [
+" obsolete "
 	| matrix tree specCols |
 	matrix := self cellValuesAsMatrix.
-	tree := SpTablePresenter new.
+	tree := TreeModel new.
 	specCols := (1 to: matrix columnCount)
 		collect: [ :i | 
-			SpCompositeTableColumn  new
-				evaluated:  [ :node | (node content at: i) asString ];
-				title:  i asString;
+			TreeColumnModel new
+				displayBlock: [ :node | (node content at: i) asString ];
+				headerLabel: i asString;
 				yourself ].
 	tree columns: specCols.
+	tree roots: ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
+	tree openWithSpec.
+]
+
+{ #category : #opening }
+TabularWorksheet >> showWithSpec2 [
+	"
+	not yet ready mising how spec2 clear 
+	------------------------------------
+	 
+	| matrix tree specCols k|
+	matrix := self cellValuesAsMatrix.
+	k :=1.
+	tree := SpTablePresenter    new.
+	specCols := (1 to: matrix columnCount)
+		collect: [ :i | |e| 
+			SpStringTableColumn   new 
+				evaluated: [(1 to: matrix  rowCount ) collect: [ :j| matrix at: j at: i  ifInvalid: nil]];
+				evaluated: [ k>( matrix size) ifTrue: [k:=1]. k:=k+1. (matrix key: (k-1)) asString ]
+				evaluation: [ k >(matrix rowCount)ifTrue:[k:=1]. k:=k+1.(matrix at:(k-1) at:i ) asString] ;
+				title:  i asString;
+				yourself ].
+	tree columns:  specCols.
 	tree
-		"roots:  ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ])."
-			items:   #(1 4 2 3 5 8 7 9); beResizable.
-	tree openWithSpec 
+		items:  ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
+			 items:   ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]) ; showColumnHeaders; 
+						 items:  [(1 to: matrix rowCount) collect:[ :i | (1 to: matrix columnCount) collect: [ :j |   matrix at: j at:i] ]] items: matrix  
+		  ; showColumnHeaders; 
+			beResizable.
+	tree openWithSpec."
 ]
 
 { #category : #'accessing structure variables' }
