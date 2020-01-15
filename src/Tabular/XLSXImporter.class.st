@@ -60,9 +60,9 @@ XLSXImporter >> extractArchive: aStream [
 
 { #category : #extracting }
 XLSXImporter >> extractSharedStrings [
-	(archive memberNamed: 'xl/sharedStrings.xml') isNil
-		ifTrue: [ ^ sharedStrings := '' ]
-		ifFalse: [ ^ sharedStrings := TabularXLSXSharedStringsParser
+	(archive memberNamed: 'xl/sharedStrings.xml')
+		ifNil: [ ^ sharedStrings := '' ]
+		ifNotNil: [ ^ sharedStrings := TabularXLSXSharedStringsParser
 				parse: ((archive memberNamed: 'xl/sharedStrings.xml') contentStreamFromEncoding: 'utf8')	]
 ]
 
