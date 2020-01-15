@@ -72,13 +72,11 @@ TabularWorksheet >> atColumn: colNum [
 { #category : #accessing }
 TabularWorksheet >> atRow: rowNum [
 
-	| lastColumn row arrayIdx |
+	| lastColumn row |
 	lastColumn := self columns last.
 	row := Array new: lastColumn.
-	arrayIdx := 1.
 	1 to: lastColumn do: [ :idx | 
-		row at: arrayIdx put: (self col: idx row: rowNum) value.
-		arrayIdx := arrayIdx + 1].
+		row at: idx put: (self col: idx row: rowNum) value].
 	^row.
 ]
 
