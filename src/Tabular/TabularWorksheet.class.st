@@ -108,7 +108,7 @@ TabularWorksheet >> cellsAsMatrix [
 	| matrix rowMax colMax |
 	colMax := self maxNumberOfColumns.
 	rowMax := self maxNumberOfRows.
-	matrix := Matrix rows: rowMax columns: colMax.
+	matrix := Array2D rows: rowMax columns: colMax.
 	cells associationsDo: [ :assoc | matrix at: assoc key y at: assoc key x put: assoc value ].
 	^ matrix
 ]
