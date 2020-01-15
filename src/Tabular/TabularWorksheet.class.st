@@ -242,7 +242,7 @@ TabularWorksheet >> isTabularWorksheet [
 { #category : #accessing }
 TabularWorksheet >> maxNumberOfColumns [
 
-	(cells keys size = 0) ifTrue: [ ^0 ] ifFalse:  [	^ cells keys max x  ]
+	cells keys isEmpty ifTrue: [ ^0 ] ifFalse:  [	^ cells keys max x  ]
 
 
 ]
