@@ -30,8 +30,9 @@ Class {
 
 { #category : #'instance creation' }
 TabularWorkbook class >> example1 [
+" filename in memory "
 	| workbook sheet |
-	workbook := TabularWorkbook withSheets: 1.
+	workbook := self withSheets: 1.
 	workbook filename: 'Test.xlsx'.
 	sheet := workbook worksheets first.
 	sheet
@@ -42,6 +43,7 @@ TabularWorkbook class >> example1 [
 	(sheet cells at: 2 @ 1) colspan: 3.
 	(sheet cells at: 1 @ 2) rowspan: 3.
 	sheet  at: 4 @ 3 putData: 'Jurij -- Юрий'.
+	sheet  at: 4 @ 10 putData: 'test my file'.
 	
 	^ workbook
 ]

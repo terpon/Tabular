@@ -82,6 +82,6 @@ TabularExport >> workbook: anObject [
 
 { #category : #'as yet unclassified' }
 TabularExport >> writeZip [
-	zip writeToFileNamed: workbook filename.
+	zip writeToFile: workbook filename.
 
 ]
