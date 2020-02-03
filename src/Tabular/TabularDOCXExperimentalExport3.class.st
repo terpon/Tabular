@@ -62,7 +62,7 @@ TabularDOCXExperimentalExport3 >> generate [
 	| documentString |
 	zip := ZipArchive new 
 			readFrom:  self class tabularXLSXfileWithoutDocumentXML readStream.
-documentString := (self generateDocumentXML convertToEncoding: 'utf-8').
+documentString := (self generateDocumentXML convertToEncoding: 'utf8').
 zip addString: documentString as: 'word/document.xml'.
 self writeZip
 

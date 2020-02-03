@@ -113,7 +113,7 @@ theRelsString := '<?xml version="1.0" encoding="UTF-8"?>
 
 zip:= ZipArchive new. 
 zip addString: theString as: '[Content_Types].xml'.
-zip addString: (theContentString convertToEncoding: 'utf-8') as: 'word/document.xml'.
+zip addString: (theContentString convertToEncoding: 'utf8') as: 'word/document.xml'.
 zip addString: theRelsString as: '_rels/.rels'.
 zip writeToFileNamed: fname3 .
 ]

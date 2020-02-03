@@ -53,12 +53,11 @@ TabularXLSXExport class >> example2 [
 "round trip"
  | workbook |
 
-self halt. "does not work yet"
-self workbook: (TabularWorkbook example1) fileName: 'TabularTest2Export.xlsx'.
+self workbook: (TabularWorkbook example1) fileName:  ( FileLocator image parent /'TabularTest2Export.xlsx') absolutePath .
 
-workbook := XLSXImporter import: (FileLocator home / 'TabularTest2Export.xlsx') fullName .
+workbook := XLSXImporter import: (FileLocator  image parent / 'TabularTest2Export.xlsx') fullName .
 
-self workbook: (TabularWorkbook example1) fileName: 'TabularTest2ExportAndReimported.xlsx'.
+self workbook: (TabularWorkbook example1) fileName: ( FileLocator  image parent / 'TabularTest2ExportAndReimported.xlsx') absolutePath.
 ]
 
 { #category : #examples }
@@ -210,7 +209,7 @@ TabularXLSXExport >> newXMLWriter [
 	"create a new XML writer that emits the proper XML declaration and pretty-prints output."
 	| w |
 	w := XMLWriter new enablePrettyPrinting.
-	w xml encoding: 'utf8'; standalone: true.
+	w xml encoding: 'UTF-8'; standalone: true.
 	^w
 ]
 
@@ -219,8 +218,7 @@ TabularXLSXExport >> newXMLWriterForRels [
 	"create a new XML writer that emits the proper XML declaration (without standalone attribute) and pretty-prints output."
 	| w |
 	w := XMLWriter new .
-	"be careful encodin not UTF-8 but utf8" 
-	w xml encoding: 'utf8'; standalone: true.
+	w xml encoding: 'UTF-8'; standalone: true.
 	^w
 ]
 
@@ -468,7 +466,7 @@ TabularXLSXExport >> styles_xml [
 TabularXLSXExport >> workbook_xml [
 	"self new workbook: (TabularWorkbook new addSheet: TabularWorksheet new); workbook_xml"
 
-	| w c |
+	| w  |
 	w := self newXMLWriter.
 	(w tag: 'workbook')
 		xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
@@ -489,6 +487,7 @@ TabularXLSXExport >> workbook_xml [
 					(#refMode -> 'A1').
 					(#iterate -> 'false').
 					(#iterateDelta -> '0.001')}.
+			w tag: 'bookViews'.
 			w
 				tag: 'sheets'
 				with: [ workbook worksheets
@@ -515,32 +514,13 @@ TabularXLSXExport >> workbook_xml [
 							]
 						].
 			" save defined names"
-			workbook definedNames
+			 workbook definedNames
 				ifNotEmpty: [ w
 						tag: 'definedNames'
 						with: [ workbook definedNames
 								do: [ :each | 
-									" on tag chaque attribut"
-									c := nil.
-									c := {(#name -> each name)}.
-									(each isPresent: #comment)
-										ifTrue: [ c := c , {(#comment -> each comment)} ].
-									(each isPresent: #customerMenu)
-										ifTrue: [ c := c , {(#customerMenu -> each customerMenu)} ].
-									(each isPresent: #description)
-										ifTrue: [ c := c , {(#description -> each description)} ].
-									(each isPresent: #function)
-										ifTrue: [ c := c , {(#function -> each function)} ].
-									(each isPresent: #vbProcedure)
-										ifTrue: [ c := c , {(#vbProcedure -> each vbProcedure)} ].
-									(each isPresent: #xlm)
-										ifTrue: [ c := c , {(#xlm -> each xlm)} ].
-									(each isPresent: #hidden)
-										ifTrue: [ c := c , {(#hidden -> each hidden)} ].
-									(each isPresent: #localSheetId)
-										ifTrue: [ c := c , {(#localSheetId -> each localSheetId)} ].
 									" on sauve "
-									w tag: 'definedName' attributes: c with: each content ] ] ] ].
+									w tag: 'definedName' attributes: each attributes   ] ] ] ].
 	^ w contents
 ]
 

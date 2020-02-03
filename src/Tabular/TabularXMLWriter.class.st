@@ -51,9 +51,9 @@ TabularXMLWriter >> contents [
 { #category : #initalize }
 TabularXMLWriter >> initialize [
 	
-	writer isNil ifTrue: [writer := XMLWriter new].
-	writer enablePrettyPrinting.
-	writer xml  standalone: true.
+	writer ifNil: [writer := XMLWriter new.
+	"writer enablePrettyPrinting."
+	writer xml encoding: 'UTF-8'; standalone: true].
 	
 
 ]

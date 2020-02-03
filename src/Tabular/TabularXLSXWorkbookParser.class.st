@@ -27,7 +27,8 @@ TabularXLSXWorkbookParser >> buildRootObject [
 
 { #category : #'as yet unclassified' }
 TabularXLSXWorkbookParser >> definedName_characters: astring [
-	defname content: astring
+	"defname content: astring"
+	defname attributeAt: 'content' put: astring 
 ]
 
 { #category : #'as yet unclassified' }
@@ -40,11 +41,8 @@ TabularXLSXWorkbookParser >> definedName_end [
 { #category : #'as yet unclassified' }
 TabularXLSXWorkbookParser >> definedName_start: properties [
 	defname := TabularDefinedNames new.
-	properties at: 'name' ifPresent: [ :n | defname name: n ].
-	properties at: 'hidden' ifPresent: [ :n | defname hidden: n ].
-	properties
-		at: 'localSheetId'
-		ifPresent: [ :n | defname localSheetId: n ]
+	"properties for each"
+	properties keysAndValuesDo:  [:k :v| defname attributeAt: k put:  v]. 
 
 ]
 

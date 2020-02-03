@@ -61,7 +61,7 @@ archive := ZipArchive new
 
 aWorksheet := TabularWorksheet new.
 
-documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf-8').
+documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf8').
 archive addString: documentString as: 'word/document.xml'.
 
 archive writeToFileNamed: (FileLocator home / 'testExport3Write5.docx')
@@ -73,7 +73,7 @@ TabularDOCXExperimentalExportTest3 class >> example6Write [
 archive := ZipArchive new 
 			readFrom: self tabularTestTableWithoutDocumentXML readStream.
 aWorksheet := self sampleWorksheetWith2RowsAnd3Columns.
-documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf-8').
+documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf8').
 
 archive addString: documentString as: 'word/document.xml'.
 archive writeToFileNamed: (FileLocator home / 'testExport3Write6.docx')
@@ -141,7 +141,7 @@ TabularDOCXExperimentalExportTest3 class >> write2 [
 aStream := self tabularTestTableWithoutDocumentXML readStream.
 archive := ZipArchive new readFrom: aStream.
 "archive removeMember: 'word/document.xml'."
-archive addString: (self documentString convertToEncoding: 'utf-8') as: 'word/document.xml'.
+archive addString: (self documentString convertToEncoding: 'utf8') as: 'word/document.xml'.
 
 archive writeToFileNamed: (FileLocator home / 'test.docx')
 

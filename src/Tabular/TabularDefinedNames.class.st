@@ -16,76 +16,29 @@ definamedName in workbook
 Class {
 	#name : #TabularDefinedNames,
 	#superclass : #TabularObject,
-	#instVars : [
-		'comment',
-		'customerMenu',
-		'description',
-		'function',
-		'vbProcedure',
-		'xlm',
-		'content'
-	],
 	#category : #'Tabular-Model'
 }
 
 { #category : #accessing }
-TabularDefinedNames >> comment [
-	^ self attributeAt: #comment
+TabularDefinedNames >> attributeAt: anAttribute [ 
+	^ self attributeAt: anAttribute 
+	
+	
 ]
 
 { #category : #accessing }
-TabularDefinedNames >> comment: aString [
-	self attributeAt: #comment put: aString
+TabularDefinedNames >> attributes [ 
+" return attributes of the instance " 
+	^  attributes 
+	
+	
 ]
 
 { #category : #accessing }
-TabularDefinedNames >> content [
-	^  content
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> content: aString [
-	content  := aString
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> customerMenu [
-	^ self attributeAt: #customerMenu
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> customerMenu: aString [
-	self attributeAt: #customerMenu put: aString
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> description [
-	^ self attributeAt: #description
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> description: aString [
-	self attributeAt: #description put: aString
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> function [
-	^self attributeAt: #function 
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> function: aBoolean [
-	self attributeAt: #function put: aBoolean
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> hidden [
-	^  self attributeAt: #hidden
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> hidden: aBoolean [
-	self attributeAt: #hidden put: aBoolean
+TabularDefinedNames >> getter: anAttribute [ 
+	^ self attributeAt: anAttribute 
+	
+	
 ]
 
 { #category : #accessing }
@@ -96,41 +49,7 @@ TabularDefinedNames >> isPresent: anOptionalattribut [
 ]
 
 { #category : #accessing }
-TabularDefinedNames >> localSheetId [
-	^ self attributeAt: #localSheetId
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> localSheetId: aNumber [
-	 self attributeAt: #localSheetId  put: aNumber
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> name [
-	^self attributeAt: #name
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> name: aString [
-	self attributeAt: #name put: aString
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> vbProcedure [
-^	self attributeAt: #vbProcedure 
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> vbProcedure: aBoolean [
-	self attributeAt: #vbProcedure put: aBoolean
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> xlm [
-	^self attributeAt: #xlm
-]
-
-{ #category : #accessing }
-TabularDefinedNames >> xlm: aBoolean [
-	self attributeAt: #xlm put: aBoolean
+TabularDefinedNames >> setter: anAttribute put: aValue [
+	self attributeAt: anAttribute put: aValue
+	
 ]

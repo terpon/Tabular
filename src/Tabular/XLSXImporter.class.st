@@ -87,7 +87,7 @@ XLSXImporter >> extractWorkbookRels [
 XLSXImporter >> extractWorksheets [
 	self extractWorkbookRels.
 	self extractWorksheetsList keysAndValuesDo: [ :id :sheetName | | aSheet |
-			aSheet := TabularXLSXSheetParser	parse: ((archive memberNamed: (self getPathForSheet: id)) contentStream).				
+			aSheet := TabularXLSXSheetParser	parse: ((archive memberNamed: (self getPathForSheet: id)) contentStreamFromEncoding: 'utf8').				
 			aSheet name: sheetName.
 			workbook addSheet: aSheet.
 		].
