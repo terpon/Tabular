@@ -74,7 +74,7 @@ XLSXImporter >> extractArchive: aStream [
 XLSXImporter >> extractSharedStrings [
       (archive memberNamed: 'xl/sharedStrings.xml') isNil ifTrue: [ ^sharedStrings    := '']
 ifFalse: 
-	[^sharedStrings := TabularXLSXSharedStringsParser parse: (archive memberNamed: 'xl/sharedStrings.xml') contentStream]
+	[^sharedStrings := TabularXLSXSharedStringsParser parse: (self streamArchiveNamed: 'xl/sharedStrings.xml')]
 	
 
 ]
@@ -93,14 +93,14 @@ XLSXImporter >> extractStyles [
 
 { #category : #extracting }
 XLSXImporter >> extractWorkbookRels [
-	^workbookRels := XLSXRelsParser parse: (archive memberNamed: 'xl/_rels/workbook.xml.rels') contentStream.
+	^workbookRels := XLSXRelsParser parse: (self streamArchiveNamed: 'xl/_rels/workbook.xml.rels').
 ]
 
 { #category : #extracting }
 XLSXImporter >> extractWorksheets [
 	self extractWorkbookRels.
 	self extractWorksheetsList keysAndValuesDo: [ :id :sheetName | | aSheet |
-			aSheet := TabularXLSXSheetParser	parse: ((archive memberNamed: (self getPathForSheet: id)) contentStream).				
+			aSheet := TabularXLSXSheetParser	parse: (self streamArchiveNamed: (self getPathForSheet: id)).				
 			aSheet name: sheetName.
 			workbook addSheet: aSheet.
 		].
@@ -110,7 +110,7 @@ XLSXImporter >> extractWorksheets [
 { #category : #extracting }
 XLSXImporter >> extractWorksheetsList [
 | list |
-	list:=TabularXLSXWorkbookParser parse: (archive memberNamed: 'xl/workbook.xml') contentStream.
+	list:=TabularXLSXWorkbookParser parse: (self streamArchiveNamed: 'xl/workbook.xml').
 	sheetsToExtract ifNotNil:[list := list associationsSelect: [:assoc| sheetsToExtract includes: assoc value] ].
 	^list.
 
@@ -140,7 +140,7 @@ XLSXImporter >> import: aFileReference onlySheetsNamed: aCollection [
 	^ self import: aFileReference
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #extracting }
 XLSXImporter >> resolveSharedStrings [
 "Replace shared strings pointers to real strings"
 	workbook worksheets do:[:worksheet|
@@ -149,4 +149,10 @@ XLSXImporter >> resolveSharedStrings [
 				ifTrue:[cell data: (sharedStrings at: (cell data asNumber + 1))] "XLSX uses 0-based arrays"
 		]
 	]
+]
+
+{ #category : #extracting }
+XLSXImporter >> streamArchiveNamed: aName [
+	^ (archive memberNamed: aName) contentStreamFromEncoding: ZnNullEncoder new
+
 ]
