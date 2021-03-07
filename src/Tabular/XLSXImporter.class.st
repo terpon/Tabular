@@ -44,7 +44,8 @@ Class {
 	#instVars : [
 		'sharedStrings',
 		'workbookRels',
-		'sheetsToExtract'
+		'sheetsToExtract',
+		'encoding'
 	],
 	#category : #'Tabular-Importers'
 }
@@ -59,6 +60,12 @@ XLSXImporter class >> import: aStream [
 { #category : #importing }
 XLSXImporter class >> import: aFileReferenceOrAStream onlySheetsNamed: aCollection [
 	^ self new import: aFileReferenceOrAStream onlySheetsNamed: aCollection
+]
+
+{ #category : #accessing }
+XLSXImporter >> encoding: anEncoding [
+"Sets en encoding for the files, defaults to utf-8."
+	encoding := anEncoding
 ]
 
 { #category : #importing }
@@ -153,6 +160,7 @@ XLSXImporter >> resolveSharedStrings [
 
 { #category : #extracting }
 XLSXImporter >> streamArchiveNamed: aName [
-	^ (archive memberNamed: aName) contentStreamFromEncoding: ZnNullEncoder new
+	encoding ifNil: [ encoding := ZnUTF8Encoder new ].
+	^ (archive memberNamed: aName) contentStreamFromEncoding: encoding
 
 ]
