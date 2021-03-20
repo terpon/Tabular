@@ -20,7 +20,8 @@ Class {
 	#superclass : #SAXHandler,
 	#instVars : [
 		'parsingStack',
-		'saxStack'
+		'saxStack',
+		'methodNameRegex'
 	],
 	#category : #'Tabular-SAXParser'
 }
@@ -108,7 +109,12 @@ TabularSAXParser >> initialize [
 TabularSAXParser >> methodName: aQualifiedName [
 	"Replace characters that are valid in an element name, but not a method name."
 
-	^ aQualifiedName copyWithRegex: '\-|\:' matchesReplacedWith: '_'
+	^ self methodNameRegex copy: aQualifiedName replacingMatchesWith: '_'
+]
+
+{ #category : #private }
+TabularSAXParser >> methodNameRegex [
+  ^ methodNameRegex ifNil: [ methodNameRegex := '\-|\:' asRegex ]
 ]
 
 { #category : #parsing }
