@@ -1,3 +1,17 @@
+"
+to comment 
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	colNum:		<Object>
+	currentWorksheet:		<Object>
+	rowNum:		<Object>
+	workbook:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #ODSContentParser,
 	#superclass : #TabularSAXParser,

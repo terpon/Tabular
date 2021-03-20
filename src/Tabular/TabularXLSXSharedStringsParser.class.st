@@ -1,3 +1,11 @@
+"
+to c0mment 
+ 
+Internal Representation and Key Implementation Points.
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularXLSXSharedStringsParser,
 	#superclass : #TabularSAXParser,

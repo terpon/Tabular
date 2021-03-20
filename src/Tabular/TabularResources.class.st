@@ -6,20 +6,11 @@ More examples see
 http://www.openoffice.org/sc/testdocs/index.html (the links marked with 'XML')
 
 https://github.com/GNOME/gnumeric
-
-For the Responsibility part: Three sentences about my main responsibility, what I'm doing, what services do I offer.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- what is the way to create instances is a plus.
-
-   One simple example is simply gorgeous.
  
 Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	odswb01:		<Object>
 
 
     Implementation Points
@@ -49,7 +40,7 @@ TabularResources class >> createTestNamed: aName fromFileNamed: aFile [
 { #category : #'example creation' }
 TabularResources class >> example1Creation [
 
-self createTestNamed: 'testExcelFile1OneSheetOnly' fromFileNamed: (FileLocator home / self fileNameOfExample1)
+self createTestNamed: 'testExcelFile1OneSheetOnly' fromFileNamed: (FileLocator home / self fileNameOfExample1)  
 
 ]
 

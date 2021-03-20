@@ -10,13 +10,14 @@ Class {
 { #category : #running }
 TabularXLSXImporterTest1 >> setUp [
 	| file |
+	super setUp.
 	file := TabularResources testExcelFile1OneSheetOnly  readStream.
 	workbook := XLSXImporter import: file
 ]
 
 { #category : #tests }
 TabularXLSXImporterTest1 >> testAccessElementFromASheet [
-	self assert: (((workbook worksheetNamed: 'Sheet1') at: 3@9) data = 39).
+	self assert: ((workbook worksheetNamed: 'Sheet1') at: 3@9) data equals: 39.
 ]
 
 { #category : #tests }

@@ -1,23 +1,16 @@
 "
 I am a TabularWorkbook the model for a spreadsheet file.
-
 TabularWorkbook example1
 
-For the Responsibility part: Three sentences about my main responsibility, what I'm doing, what services do I offer.
-
-For the Collaborators Part: 
-I keep one or more Worksheets
-
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- what is the way to create instances is a plus.
-
-   One simple example is simply gorgeous.
  
 Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	definedNames:		<Object>
+	sheetsState:		<Object>
+	strings:		<Object>
+	styles:		<Object>
+	worksheets:		<Object>
 
 
     Implementation Points
@@ -28,15 +21,18 @@ Class {
 	#instVars : [
 		'worksheets',
 		'styles',
-		'strings'
+		'strings',
+		'sheetsState',
+		'definedNames'
 	],
 	#category : #'Tabular-Model'
 }
 
 { #category : #'instance creation' }
 TabularWorkbook class >> example1 [
+" filename in memory "
 	| workbook sheet |
-	workbook := TabularWorkbook withSheets: 1.
+	workbook := self withSheets: 1.
 	workbook filename: 'Test.xlsx'.
 	sheet := workbook worksheets first.
 	sheet
@@ -47,6 +43,7 @@ TabularWorkbook class >> example1 [
 	(sheet cells at: 2 @ 1) colspan: 3.
 	(sheet cells at: 1 @ 2) rowspan: 3.
 	sheet  at: 4 @ 3 putData: 'Jurij -- Юрий'.
+	sheet  at: 4 @ 10 putData: 'test my file'.
 	
 	^ workbook
 ]
@@ -87,6 +84,16 @@ TabularWorkbook >> containsWorksheetNamed: aString [
 	^ true
 ]
 
+{ #category : #accessing }
+TabularWorkbook >> definedNames [
+	^ definedNames 
+]
+
+{ #category : #accessing }
+TabularWorkbook >> definedNames: andefinedNames [
+	definedNames add: andefinedNames
+]
+
 { #category : #'accessing - attributes' }
 TabularWorkbook >> filename [
 	^ self attributeAt: #filename
@@ -100,7 +107,24 @@ TabularWorkbook >> filename: anObject [
 { #category : #initialization }
 TabularWorkbook >> initialize [
 	super initialize.
-	worksheets := OrderedCollection new
+	worksheets := OrderedCollection new.
+	sheetsState := StandardOrderedDictionary new.
+	definedNames := Set new
+]
+
+{ #category : #testing }
+TabularWorkbook >> isTabularWorkbook [
+	^ true
+]
+
+{ #category : #accessing }
+TabularWorkbook >> sheetsState [
+	^ sheetsState
+]
+
+{ #category : #accessing }
+TabularWorkbook >> sheetsState: adico [
+sheetsState := adico.
 ]
 
 { #category : #accessing }

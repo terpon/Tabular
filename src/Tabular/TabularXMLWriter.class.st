@@ -1,3 +1,15 @@
+"
+to comment 
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	worksheet:		<Object>
+	writer:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #TabularXMLWriter,
 	#superclass : #Object,
@@ -33,15 +45,15 @@ TabularXMLWriter >> columnName: n [
 { #category : #rendering }
 TabularXMLWriter >> contents [
 
-    ^ writer write contents convertToEncoding: 'utf-8'
+    ^ writer write contents convertToEncoding: 'utf8'
 ]
 
 { #category : #initalize }
 TabularXMLWriter >> initialize [
-
-	writer isNil ifTrue: [writer := XMLWriter new].
-	writer enablePrettyPrinting.
-	writer xml standalone: true.
+	
+	writer ifNil: [writer := XMLWriter new.
+	"writer enablePrettyPrinting."
+	writer xml encoding: 'UTF-8'; standalone: true].
 	
 
 ]
@@ -52,10 +64,15 @@ TabularXMLWriter >> renderCell: coord [
 	cell := worksheet cellAt: coord.
 	^ cell data isNumber
 		ifTrue: [ self renderCellWithNumber: coord ]
-		ifFalse: [ 
-			(cell data isKindOf: Date)
+		ifFalse: [ (cell data isKindOf: Date)
 				ifTrue: [ self renderCellWithDate: coord ]
-				ifFalse: [ self renderCellWithString: coord ] ]
+				ifFalse:[( cell data isNil ) ifTrue: [ self renderCellNil: coord]
+				ifFalse: [ self renderCellWithString: coord ] ] ]
+]
+
+{ #category : #rendering }
+TabularXMLWriter >> renderCellNil: coord [
+	self subclassResponsibility
 ]
 
 { #category : #rendering }

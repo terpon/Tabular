@@ -16,8 +16,8 @@ ODSImporterTest class >> addFile: fileName as: selectorName [
 	| bs ba source space |
 	
 	bs := fileName asFileReference binaryReadStream.
-	[ 
-		ba := bs upToEnd ] ensure: [ bs close ].
+	 
+	ba := bs upToEnd  ensure: [ bs close ].
 	source := String new writeStream .
 	source
 		nextPutAll: selectorName;
@@ -47,55 +47,55 @@ ODSImporterTest >> setUp [
 { #category : #tests }
 ODSImporterTest >> testIsWorkbook [
 
-	self assert: workbook class = TabularWorkbook.
+	self assert: workbook class equals: TabularWorkbook.
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01Date [
 	"Check that integer cells are parsed correctly"
 	
-	self assert: (self wb01sheet1 at: 3@7) data = (Date year: 2016 month: 04 day: 18).
+	self assert: (self wb01sheet1 at: 3@7) data equals: (Date year: 2016 month: 04 day: 18).
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01Float [
 	"Check that floating point cells are parsed correctly"
 	
-	self assert: (self wb01sheet1 at: 3@5) data = 42.42.
+	self assert: (self wb01sheet1 at: 3@5) data equals: 42.42.
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01Formula [
 	"Check that formulas cells are parsed correctly"
 	
-	self assert: (self wb01sheet1 at: 3@6) formula = 'of:=INT([.C5])'.
+	self assert: (self wb01sheet1 at: 3@6) formula equals: 'of:=INT([.C5])'.
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01Integer [
 	"Check that integer cells are parsed correctly"
 	
-	self assert: (self wb01sheet1 at: 3@4) data = 42.
+	self assert: (self wb01sheet1 at: 3@4) data equals: 42.
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01IsolatedCell [
 	"Check that cell 16@42 is located correctly"
 	
-	self assert: (self wb01sheet1 at: 16@42) data = 'This cell is by itself (16 @ 42)'
+	self assert: (self wb01sheet1 at: 16@42) data equals: 'This cell is by itself (16 @ 42)'
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01Time [
 	"Check that integer cells are parsed correctly"
 	
-	self assert: (self wb01sheet1 at: 3@8) data = (Time hour: 7 minute: 4 second: 37).
+	self assert: (self wb01sheet1 at: 3@8) data equals: (Time hour: 7 minute: 4 second: 37).
 ]
 
 { #category : #tests }
 ODSImporterTest >> testWorksheet01Title [
 
-	self assert: (self wb01sheet1 at: 1@1) data = 'Tabular ODS Test Data'
+	self assert: (self wb01sheet1 at: 1@1) data equals: 'Tabular ODS Test Data'
 ]
 
 { #category : #tests }

@@ -29,21 +29,19 @@ xmlStringWorkbookWith2Worksheets := '<?xml version="1.0" encoding="UTF-8" standa
 
 { #category : #tests }
 TabularXLSXWorkbookParserTest >> testParsingResult [
-|  xmlString result |
-
-xmlString := '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+	| xmlString result |
+	xmlString := '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><fileVersion appName="Calc"/><workbookPr backupFile="false" showObjects="all" date1904="false"/>
 
 <sheets>
 <sheet name="Sheet1" sheetId="1" state="visible" r:id="rId2"/>
+<sheet name="Sheet99" sheetId="2" state="hidden" r:id="rId3"/>
 </sheets>
 
 </workbook>'.
-
-result := TabularXLSXWorkbookParser 	parse: xmlString.
-self assert: (result isKindOf: StandardOrderedDictionary).
-self assert: (result at: 'rId2')	 equals: 'Sheet1'.
-
+	result := TabularXLSXWorkbookParser parse: xmlString.
+	self assert: (result isKindOf: StandardOrderedDictionary).
+	self assert: (result at: 'rId2') equals: 'Sheet1'
 ]
 
 { #category : #tests }

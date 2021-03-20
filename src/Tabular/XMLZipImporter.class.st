@@ -22,7 +22,7 @@ Internal Representation and Key Implementation Points.
 	xmlDOMs:		<Object>
 
 
-    Implementation Points
+Implementation Points
 "
 Class {
 	#name : #XMLZipImporter,

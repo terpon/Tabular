@@ -80,6 +80,6 @@ wbk := TabularWorkbook new.
 wsheet := TabularWorksheet new.
 wsheet name: 'mySheet'.
 wbk addSheet: wsheet.
-self assert: (wbk worksheetNamed: 'mySheet2' ifNone: 'not found') ='not found'.
+self assert: (wbk worksheetNamed: 'mySheet2' ifNone: 'not found') equals:'not found'.
 
 ]

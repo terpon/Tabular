@@ -1,51 +1,36 @@
 "
 I am TabularXSLXExport and export worksheets to Excel XSLX file format.
-
 NEXT STEPS:
-
 1. Add styles to export
-
 2. Generalize worksheets export mechanism. Use rIds in the
     worksheet objects.
-
 3. Create a class TabularDOCXExport as a copy of this class and make it work.
-
-
 LIMITATIONS:
-
 - Currently only the first three worksheets are exported.
-
 Reference:
-
 http://officeopenxml.com/anatomyofOOXML-xlsx.php
-
 Content Types
-
 Every package must have a [Content_Types].xml, found at the root of the package. This file contains a list of all of the content types of the parts in the package. Every part and its type must be listed in [Content_Types].xml. The following is a content type for the main content part:
-
-<Override PartName=""/xl/workbook.xml"" ContentType=""application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml""/>
-
+<Override PartName=""""/xl/workbook.xml"""" ContentType=""""application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml""""/>
 It's important to keep this in mind when adding new parts to the package.
-
-
-
 Relationships
-
 Every package contains a relationships part that defines the relationships between the other parts and to resources outside of the package. This separates the relationships from content and makes it easy to change relationships without changing the sources that reference targets.
 package relationships part
-
 For an OOXML package, there is always a relationships part (.rels) within the _rels folder that identifies the starting parts of the package, or the package relationships. For example, the following defines the identity of the start part for the content:
-
-<Relationship Id=""rId1"" Type=""http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"" Target=""xl/workbook.xml""/>.
-
+<Relationship Id=""""rId1"""" Type=""""http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"""" Target=""""xl/workbook.xml""""/>.
 There are also typically relationships within .rels for app.xml and core.xml.
-
 In addition to the relationships part for the package, each part that is the source of one or more relationships will have its own relationships part. Each such relationship part is found within a _rels sub-folder of the part and is named by appending '.rels' to the name of the part.
-
 Typically the main content part (workbook.xml) has its own relationships part (workbook.xml.rels). It will contain relationships to the other parts of the content, such as sheet1.xml, sharedStrings.xml, styles.xml, theme1,xml, as well as the URIs for external links. 
-
-
 https://msdn.microsoft.com/en-us/library/office/gg278316.aspx
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	sharedStrings:		<Object>
+	totalSharedStrings:		<Object>
+
+
+    Implementation Points
 "
 Class {
 	#name : #TabularXLSXExport,
@@ -68,12 +53,11 @@ TabularXLSXExport class >> example2 [
 "round trip"
  | workbook |
 
-self halt. "does not work yet"
-self workbook: (TabularWorkbook example1) fileName: 'TabularTest2Export.xlsx'.
+self workbook: (TabularWorkbook example1) fileName:  ( FileLocator image parent /'TabularTest2Export.xlsx') absolutePath .
 
-workbook := XLSXImporter import: (FileLocator home / 'TabularTest2Export.xlsx') asFileReference.
+workbook := XLSXImporter import: (FileLocator  image parent / 'TabularTest2Export.xlsx') fullName .
 
-self workbook: (TabularWorkbook example1) fileName: 'TabularTest2ExportAndReimported.xlsx'.
+self workbook: (TabularWorkbook example1) fileName: ( FileLocator  image parent / 'TabularTest2ExportAndReimported.xlsx') absolutePath.
 ]
 
 { #category : #examples }
@@ -192,31 +176,32 @@ TabularXLSXExport >> docPropsCore_xml [
 
 { #category : #files }
 TabularXLSXExport >> generate [
-	
-	zip addString: self content_types_xml as: '[Content_Types].xml'.
-	zip addString: self rels as: '_rels/.rels'.
+	zip addDeflateString: self content_types_xml as: '[Content_Types].xml'.
+	zip addDeflateString: self rels as: '_rels/.rels'.
+	zip addDeflateString: self docPropsApp_xml as: 'docProps/app.xml'.
+	zip addDeflateString: self docPropsCore_xml as: 'docProps/core.xml'.
 
-	zip addString: self docPropsApp_xml as: 'docProps/app.xml'.
-	zip addString: self docPropsCore_xml as: 'docProps/core.xml'.
-
-    "Everything outside the xl/ folder is just meta data"
+	"Everything outside the xl/ folder is just meta data"
 	self countSharedStrings.
-	zip addString: self sharedStrings_xml  as: 'xl/sharedStrings.xml'.
-	zip addString: self styles_xml as: 'xl/styles.xml'.
-	zip addString: self workbook_xml as: 'xl/workbook.xml'.
-	zip addString: self workbook_xml_rels as: 'xl/_rels/workbook.xml.rels'.
+	zip addDeflateString: self sharedStrings_xml as: 'xl/sharedStrings.xml'.
+	zip addDeflateString: self styles_xml as: 'xl/styles.xml'.
+	zip addDeflateString: self workbook_xml as: 'xl/workbook.xml'.
+	zip
+		addDeflateString: self workbook_xml_rels
+		as: 'xl/_rels/workbook.xml.rels'.
 	workbook worksheets
 		doWithIndex: [ :worksheet :index | 
 			zip
-				addString: (TabularWorksheetWriterXL for: worksheet)
+				addDeflateString: (TabularWorksheetWriterXL for: worksheet)
 				as: 'xl/worksheets/sheet' , index printString , '.xml' ].
-	
-	self writeZip.
+	self writeZip
 ]
 
 { #category : #initialize }
 TabularXLSXExport >> initialize [
+
 	zip := ZipArchive new
+
 ]
 
 { #category : #files }
@@ -232,8 +217,8 @@ TabularXLSXExport >> newXMLWriter [
 TabularXLSXExport >> newXMLWriterForRels [
 	"create a new XML writer that emits the proper XML declaration (without standalone attribute) and pretty-prints output."
 	| w |
-	w := XMLWriter new enablePrettyPrinting.
-	w xml encoding: 'UTF-8'.
+	w := XMLWriter new .
+	w xml encoding: 'UTF-8'; standalone: true.
 	^w
 ]
 
@@ -272,17 +257,31 @@ TabularXLSXExport >> relsFor: associations [
 { #category : #files }
 TabularXLSXExport >> sharedStrings_xml [
 	"we don't maintain the string table within the workbook during processing, but build it only for writing"
+
 	| w |
 	w := self newXMLWriter.
 	(w tag: 'sst')
 		xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
-		attributes: { #count -> totalSharedStrings printString. #uniqueCount -> sharedStrings size printString };
-		with: [
-			sharedStrings do: [ :each |
-				w tag: 'si' with: [ 
-					w tag: 't' attributes: {  #xml:space -> 'preserve' } with: each ] ]
-			].
-	^w contents
+		attributes:
+			{(#count -> totalSharedStrings printString).
+			(#uniqueCount -> sharedStrings size printString)};
+		with: [ sharedStrings
+				do: [ :each |
+					|s|
+					s := each lastSpacePosition . 
+					
+					s > 0 ifTrue: [
+						w
+						tag: 'si'
+						with: [ w tag: 't'  attributes: {(#xml:space -> 'preserve')} with: (each utf8Encoded) asString ] ].
+						"with: [ w tag: 't'  with: each   ] ] ]."
+					s = 0 ifTrue: [ 	
+						w
+						tag: 'si'
+						"with: [ w tag: 't'  attributes: {(#xml:space -> 'preserve')} with: each ] ] ]."
+						with:  [ w tag: 't'  with: (each utf8Encoded) asString ] ] .
+				]].
+	^ w contents
 ]
 
 { #category : #'files-styles-xml' }
@@ -467,11 +466,12 @@ TabularXLSXExport >> styles_xml [
 TabularXLSXExport >> workbook_xml [
 	"self new workbook: (TabularWorkbook new addSheet: TabularWorksheet new); workbook_xml"
 
-	| w |
+	| w  |
 	w := self newXMLWriter.
 	(w tag: 'workbook')
 		xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
-		xmlnsAt: 'r' put: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+		xmlnsAt: 'r'
+			put: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
 		with: [ w tag: 'fileVersion' attributes: {(#appName -> 'Tabular')}.
 			w
 				tag: 'workbookPr'
@@ -487,18 +487,41 @@ TabularXLSXExport >> workbook_xml [
 					(#refMode -> 'A1').
 					(#iterate -> 'false').
 					(#iterateDelta -> '0.001')}.
+			w tag: 'bookViews'.
 			w
 				tag: 'sheets'
 				with: [ workbook worksheets
 						doWithIndex: [ :each :index | 
-							w
+							" generate the list of worksheet with local"
+						  |t f |
+									
+									t := nil.
+									t := {(#name -> each name)}.
+									"write the state each sheet, must be improved case creation
+									try to find a sheeState"
+									f:=false.
+									workbook sheetsState keysDo: [ :x | x = (each name,'_state') ifTrue: [f:=true. ]].
+									f ifTrue:  [ t:= t, {(#state -> (workbook sheetsState at: each name , '_state')) }].
+								   "ifFalse: no attribute"
+									t:=t,{(#sheetId -> index printString)}.
+									t:=t,{(#r:id -> ('rId' , (index + 2) printString))}.
+									
+								 
+						w							
 								tag: 'sheet'
-								attributes:
-									{(#name -> each name).
-									(#sheetId -> index printString).
-									(#state -> 'visible').
-									(#r:id -> ('rId' , (index + 2) printString))} ] ] ].
-	^w contents
+								attributes: t.
+							
+							]
+						].
+			" save defined names"
+			 workbook definedNames
+				ifNotEmpty: [ w
+						tag: 'definedNames'
+						with: [ workbook definedNames
+								do: [ :each | 
+									" on sauve "
+									w tag: 'definedName' attributes: each attributes   ] ] ] ].
+	^ w contents
 ]
 
 { #category : #files }

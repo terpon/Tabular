@@ -1,26 +1,21 @@
 "
 I am TabularWorksheet, the model of a sheet in a spreadsheet file.
-
-
 For the Responsibility part: Three sentences about my main responsibility, what I'm doing, what services do I offer.
-
 For the Collaborators Part:  I keep a dictionary of cells with TabularCell objects, TabularColumn and TabularRow objects
-
-
 Public API and Key Messages
-
 - message one   
 - message two 
 - what is the way to create instances is a plus.
-
    One simple example is simply gorgeous.
+ 
  
 Internal Representation and Key Implementation Points.
 
     Instance Variables
 	cells:		<Object>
-	cols:		<Object>
-	rows:		<Object>
+	colStyles:		<Object>
+	columnAttributes:		<Object>
+	rowStyles:		<Object>
 
 
     Implementation Points
@@ -77,13 +72,11 @@ TabularWorksheet >> atColumn: colNum [
 { #category : #accessing }
 TabularWorksheet >> atRow: rowNum [
 
-	| lastColumn row arrayIdx |
+	| lastColumn row |
 	lastColumn := self columns last.
 	row := Array new: lastColumn.
-	arrayIdx := 1.
 	1 to: lastColumn do: [ :idx | 
-		row at: arrayIdx put: (self col: idx row: rowNum) value.
-		arrayIdx := arrayIdx + 1].
+		row at: idx put: (self col: idx row: rowNum) value].
 	^row.
 ]
 
@@ -98,9 +91,14 @@ TabularWorksheet >> cellValuesAsMatrix [
 	| matrix rowMax colMax |
 	colMax := self maxNumberOfColumns.
 	rowMax := self maxNumberOfRows.
-	matrix := Matrix rows: rowMax columns: colMax.
+	matrix := Array2D  rows: rowMax columns: colMax.
 	cells associationsDo: [ :assoc | matrix at: assoc key y at: assoc key x put: assoc value value ].
 	^ matrix
+]
+
+{ #category : #accessing }
+TabularWorksheet >> cells [ 
+^ cells
 ]
 
 { #category : #accessing }
@@ -108,7 +106,7 @@ TabularWorksheet >> cellsAsMatrix [
 	| matrix rowMax colMax |
 	colMax := self maxNumberOfColumns.
 	rowMax := self maxNumberOfRows.
-	matrix := Matrix rows: rowMax columns: colMax.
+	matrix := Array2D rows: rowMax columns: colMax.
 	cells associationsDo: [ :assoc | matrix at: assoc key y at: assoc key x put: assoc value ].
 	^ matrix
 ]
@@ -129,6 +127,7 @@ TabularWorksheet >> cellsKeysAndValuesDo: aBlock [
 TabularWorksheet >> cleanup [
 "Removes the cells without data.
 MIND: empty cells may still contain formatting"
+" remove stringTable of the cell"
 	cells keysAndValuesRemove: [ :coord :cell| cell data isNil ].
 
 ]
@@ -243,7 +242,7 @@ TabularWorksheet >> isTabularWorksheet [
 { #category : #accessing }
 TabularWorksheet >> maxNumberOfColumns [
 
-	(cells keys size = 0) ifTrue: [ ^0 ] ifFalse:  [	^ cells keys max x  ]
+	cells keys isEmpty ifTrue: [ ^0 ] ifFalse:  [	^ cells keys max x  ]
 
 
 ]
@@ -312,9 +311,9 @@ TabularWorksheet >> show [
 TabularWorksheet >> showWithGlamour [
 	| wrapper matrix table |
 	matrix := self cellValuesAsMatrix.
-	wrapper := GLMWrapper new.
+	wrapper := GLMCompositePresentation  new.
 	wrapper
-		show: [ :a | 
+		with:  [ :a | 
 			table := a table.
 			1 to: matrix columnCount do: [ :i | table column: i asString evaluated: [ :col | col at: i ] width: 50 ] ].
 	wrapper title: 'Worksheet: ', self name asString.
@@ -323,6 +322,7 @@ TabularWorksheet >> showWithGlamour [
 
 { #category : #opening }
 TabularWorksheet >> showWithSpec [
+" obsolete "
 	| matrix tree specCols |
 	matrix := self cellValuesAsMatrix.
 	tree := TreeModel new.
@@ -335,5 +335,42 @@ TabularWorksheet >> showWithSpec [
 	tree columns: specCols.
 	tree roots: ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
 	tree openWithSpec.
+]
 
+{ #category : #opening }
+TabularWorksheet >> showWithSpec2 [
+	"
+	not yet ready mising how spec2 clear 
+	------------------------------------
+	 
+	| matrix tree specCols k|
+	matrix := self cellValuesAsMatrix.
+	k :=1.
+	tree := SpTablePresenter    new.
+	specCols := (1 to: matrix columnCount)
+		collect: [ :i | |e| 
+			SpStringTableColumn   new 
+				evaluated: [(1 to: matrix  rowCount ) collect: [ :j| matrix at: j at: i  ifInvalid: nil]];
+				evaluated: [ k>( matrix size) ifTrue: [k:=1]. k:=k+1. (matrix key: (k-1)) asString ]
+				evaluation: [ k >(matrix rowCount)ifTrue:[k:=1]. k:=k+1.(matrix at:(k-1) at:i ) asString] ;
+				title:  i asString;
+				yourself ].
+	tree columns:  specCols.
+	tree
+		items:  ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]).
+			 items:   ((1 to: matrix rowCount) collect: [ :i | matrix atRow: i ]) ; showColumnHeaders; 
+						 items:  [(1 to: matrix rowCount) collect:[ :i | (1 to: matrix columnCount) collect: [ :j |   matrix at: j at:i] ]] items: matrix  
+		  ; showColumnHeaders; 
+			beResizable.
+	tree openWithSpec."
+]
+
+{ #category : #'accessing structure variables' }
+TabularWorksheet >> state [ 
+self attributeAt: #state 
+]
+
+{ #category : #'accessing structure variables' }
+TabularWorksheet >> state: anObject [
+	self attributeAt: #state put: anObject asString
 ]

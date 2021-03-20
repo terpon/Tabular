@@ -2,12 +2,13 @@
 A migration of the project: http://ss3.gemtalksystems.com/ss/Tabular.html
 
 # Installation
+
 To install this project run the following script in a playground.
 
 ```st
 Metacello new
 	baseline: 'Tabular';
-	repository: 'github://VincentBlondeau/Tabular';
+	repository: 'github://VincentBlondeau/Tabular/src';
 	load
 ```
 

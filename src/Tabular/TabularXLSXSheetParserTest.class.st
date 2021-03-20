@@ -1,6 +1,3 @@
-"
-A XLSXSheetParserTest is a test class for testing the behavior of XLSXSheetParser
-"
 Class {
 	#name : #TabularXLSXSheetParserTest,
 	#superclass : #TestCase,

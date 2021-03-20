@@ -1,10 +1,7 @@
 "
 A TabularStyle is xxxxxxxxx.
-
 http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html
-
 http://standards.iso.org/ittf/PubliclyAvailableStandards/c061750_ISO_IEC_29500-1_2012.zip
-
 numFmtId :
 0 General
 1 0
@@ -37,29 +34,34 @@ ID formatCode
 47 mmss.0
 48 ##0.0E+0
 49 @
-
 Instance Variables
 	borderId:		<Object>
 	fillId:		<Object>
 	fontId:		<Object>
 	numFmtId:		<Object>
 	xfId:		<Object>
-
 borderId
 	- xxxxx
-
 fillId
 	- xxxxx
-
 fontId
 	- xxxxx
-
 numFmtId
 	- xxxxx
-
 xfId
 	- xxxxx
+ 
+Internal Representation and Key Implementation Points.
 
+    Instance Variables
+	borderId:		<Object>
+	fillId:		<Object>
+	fontId:		<Object>
+	numFmtId:		<Object>
+	xfId:		<Object>
+
+
+    Implementation Points
 "
 Class {
 	#name : #TabularXLSXStyle,

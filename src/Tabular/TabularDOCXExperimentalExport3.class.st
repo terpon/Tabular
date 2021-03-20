@@ -1,12 +1,7 @@
 "
-I am TabularDOCXExperimentalExport3 
-
-
+am TabularDOCXExperimentalExport3 
 An example DOCX file (zip) has been read and stored on the class side.
-
 When exporting only the file document.xml in the zip archive is generated.
-
-
 
 "
 Class {
@@ -26,7 +21,7 @@ TabularDOCXExperimentalExport3 class >> createTemplateNamed: aName fromFileNamed
 { #category : #'as yet unclassified' }
 TabularDOCXExperimentalExport3 class >> example1Creation [
 
-self createTestNamed: 'tabularTestTable' fromFileNamed: (FileLocator home / 'tabularTestTable.docx')
+self createTestNamed: 'tabularTestTable' fromFileNamed: (FileLocator home / 'tabularTestTable.docx') fullName 
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,7 +32,7 @@ TabularDOCXExperimentalExport3 class >> example1Write [
 aStream := self tabularTestTable readStream.
 archive := ZipArchive new readFrom: aStream.
 
-archive writeToFileNamed: (FileLocator home / 'testExport3Write1.docx')
+archive writeToFileNamed: (FileLocator home / 'testExport3Write1.docx') fullName 
 
 ]
 
@@ -67,7 +62,7 @@ TabularDOCXExperimentalExport3 >> generate [
 	| documentString |
 	zip := ZipArchive new 
 			readFrom:  self class tabularXLSXfileWithoutDocumentXML readStream.
-documentString := (self generateDocumentXML convertToEncoding: 'utf-8').
+documentString := (self generateDocumentXML convertToEncoding: 'utf8').
 zip addString: documentString as: 'word/document.xml'.
 self writeZip
 

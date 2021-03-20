@@ -1,12 +1,5 @@
 "
-A TabularODSStyle holds formatting information for one or more ODS cells (TabularODSCell).
-
-    Instance Variables
-	attributes: 	<Dictionary>  Attributes of the style
-	details:		<OrderedCollection> Child elements of the style
-
-
-    Implementation Points
+to comment 
 "
 Class {
 	#name : #TabularODSStyle,

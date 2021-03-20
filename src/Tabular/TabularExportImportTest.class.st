@@ -33,21 +33,23 @@ Class {
 
 { #category : #setUp }
 TabularExportImportTest >> setUp [
-
     | dir |
-     dir := FileLocator temp.  "use temporary directory to put the exported test files."
+	 
+	 super setUp.
+     	   
+	 dir := FileLocator temp  .  "use temporary directory to put the exported test files."
                                           "FileLocator home  is an alternative"
 
-    fname0 := dir / 'TabularEmptySheetExported.xlsx'.      
+    fname0 := (dir / 'TabularEmptySheetExported.xlsx') fullName.      
 
-    fname := dir / TabularResources fileNameOfExample1.
-    fname2 := dir /  TabularResources fileNameOfExample2.   
-    fname3 := dir / TabularResources fileNameOfExample1.
+    fname := (dir / TabularResources fileNameOfExample1) fullName.
+    fname2 := (dir /  TabularResources fileNameOfExample2) fullName  .   
+    fname3 := (dir / TabularResources fileNameOfExample1) fullName.
 
-    fname4 := dir / 'TabularConstructed4Exported.xlsx'.  
-    fname5 := dir / 'TabularConstructed5Exported.xlsx'.   
-    fname6 := dir / 'TabularConstructed6ExportedTwoWorksheets.xlsx'.   
-    fname7 := dir / 'TabularConstructed7ExportedThreeWorksheets.xlsx'. 
+    fname4 := (dir / 'TabularConstructed4Exported.xlsx') fullName.  
+    fname5 := (dir / 'TabularConstructed5Exported.xlsx') fullName.   
+    fname6 := (dir / 'TabularConstructed6ExportedTwoWorksheets.xlsx')fullName.   
+    fname7 := (dir / 'TabularConstructed7ExportedThreeWorksheets.xlsx')fullName. 
 		
 		
 	
@@ -72,15 +74,15 @@ TabularExportImportTest >> testExport1CellAccess [
 	| wbk  wimported cell ws |
 
 	wbk := XLSXImporter import: TabularResources testExcelFile1OneSheetOnly  readStream.
-	fname ensureDelete.
+	fname asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname.
 
 	wimported := XLSXImporter import: fname.
-	ws := (wimported worksheetNamed: 'Sheet1').
+	ws := wimported worksheetNamed: 'Sheet1'.
 	self assert: (ws allCoord includes: 3@9).
 	cell := ws at: 3@9.
 	self assert: (cell notNil).
-	self assert: (cell data = 39).
+	self assert: cell data equals: 39.
 	
 ]
 
@@ -107,7 +109,7 @@ TabularExportImportTest >> testExport1SheetName [
 	self assert: wbk worksheets size equals: 1.
 	theSheetName := wbk worksheets first name.
 	
-	fname ensureDelete.
+	fname asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname.
 
 	wbkimported := XLSXImporter import: fname.
@@ -125,7 +127,7 @@ TabularExportImportTest >> testExport1SheetName2 [
 	wbk worksheets first name: theSheetName.
 	self assert: wbk worksheets size equals: 1.
 	self assert: wbk worksheets first name equals: theSheetName. 
-     fname ensureDelete.
+     fname asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname.
 
 
@@ -139,7 +141,7 @@ TabularExportImportTest >> testExport1SheetName2 [
 { #category : #'as yet unclassified' }
 TabularExportImportTest >> testExport2 [
 
-|  wbk wimported |
+|  wbk |
 	wbk := XLSXImporter import: TabularResources testExcelFile2withThreeSheets   readStream.
 		
 	TabularXLSXExport workbook: wbk fileName: fname2.
@@ -155,7 +157,7 @@ TabularExportImportTest >> testExport3 [
 	| wbk  wimported |
 
 	wbk := XLSXImporter import: TabularResources testExcelFile1OneSheetOnly  readStream.
-     fname3 ensureDelete.
+     fname3 asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname3.
 
 	wimported := XLSXImporter import: fname3.
@@ -181,14 +183,14 @@ TabularExportImportTest >> testExport4Numbers [
 		at: 3 @ 1 putData: 31.	
 	nameOfSheet := wsheet name.		
 	wbk worksheets add: wsheet.
-      fname4 ensureDelete.
+      fname4 asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname4.
 
 	wimported := XLSXImporter import: fname4.
 	cell := ((wimported worksheetNamed: nameOfSheet) at: 1@1).
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= '11').
-	self assert: (cell data = 11).  "cell data is aString but should be a number"
+	self assert: cell data asString equals: '11'.
+	self assert: cell data equals: 11.  "cell data is aString but should be a number"
 ]
 
 { #category : #'tests-numbers' }
@@ -204,13 +206,13 @@ TabularExportImportTest >> testExport4NumbersStringContent [
 		at: 2 @ 1 putData: 21;
 		at: 3 @ 1 putData: 31.	
 	wbk worksheets add: wsheet.
-	fname4 ensureDelete.
+	fname4 asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname4.
 
 	wimported := XLSXImporter import: fname4.
 	cell := wimported worksheets first at: 1@1.
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= '11').  "content OK"
+	self assert: cell data asString equals: '11'.  "content OK"
      "cell data is aString but should be a number"
 ]
 
@@ -226,13 +228,13 @@ TabularExportImportTest >> testExport4Strings [
 		at: 2 @ 1 putData: 'def 21';
 		at: 3 @ 1 putData: 'ghi 31'.	
 	wbk worksheets add: wsheet.
-	fname4 ensureDelete.
+	fname4 asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname4.
 
 	wimported := XLSXImporter import: fname4.
 	cell := wimported worksheets first cellAt:  1@1.
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= 'abc 11').
+	self assert: cell data asString equals: 'abc 11'.
 ]
 
 { #category : #'tests-strings' }
@@ -243,16 +245,16 @@ TabularExportImportTest >> testExport5 [
 		at: 1 @ 1 putData: 'abc 11';
 		at: 2 @ 1 putData: 21.
 	wbk worksheets add: wsheet.
-	fname5 ensureDelete.
+	fname5 asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname5.
 	wbkimported := XLSXImporter import: fname5 .
 	wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
 	self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data asString= 'abc 11').
+	self assert: cell data asString equals:  'abc 11'.
 	cell := wsheetimported at: 2 @ 1.
 		self assert: (cell isKindOf:  TabularXLSXCell).
-	self assert: (cell data = 21).
+	self assert: cell data equals: 21.
 
 
 ]
@@ -274,20 +276,20 @@ wsheet name: 'mySecondSheet'.
 wsheet at: 1 @ 1 putData: 456.
 wsheet at: 1 @ 2 putData: 'abc'.
 wbk addSheet: wsheet.
-fname6 ensureDelete.
+fname6 asFileReference ensureDelete.
 TabularXLSXExport workbook: wbk fileName: fname6.
 
 wbkimported := XLSXImporter import: fname6.
  
      wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 123).
+	self assert: cell data equals: 123.
 
 	wsheetimported := wbkimported worksheets second.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 456).
+	self assert: cell data equals: 456.
 	cell := wsheetimported at: 1 @ 2.
-	self assert: (cell data = 'abc').
+	self assert: cell data equals: 'abc'.
 ]
 
 { #category : #'tests-strings' }
@@ -299,13 +301,13 @@ TabularExportImportTest >> testExport6aImportTwoWorksheets [
  
      wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 123).
+	self assert: cell data equals: 123.
 
 	wsheetimported := wbkimported worksheets second.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 456).
+	self assert: cell data equals: 456.
 	cell := wsheetimported at: 1 @ 2.
-	self assert: (cell data = 'abc').
+	self assert: cell data equals: 'abc'.
 ]
 
 { #category : #'tests-strings' }
@@ -331,24 +333,24 @@ wsheet name: 'myThirdSheet'.
 wsheet at: 1 @ 1 putData: 789.
 wbk addSheet: wsheet.
 
-fname7 ensureDelete.
+fname7 asFileReference ensureDelete.
 TabularXLSXExport workbook: wbk fileName: fname7.
 
 wbkimported := XLSXImporter import: fname7 .
  
      wsheetimported := wbkimported worksheets first.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 123).
+	self assert: cell data equals: 123.
 
 	wsheetimported := wbkimported worksheets second.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 456).
+	self assert: cell data equals: 456.
 	cell := wsheetimported at: 1 @ 2.
-	self assert: (cell data = 'abc').
+	self assert: cell data equals: 'abc'.
 	
 	wsheetimported := wbkimported worksheets third.
 	cell := wsheetimported at: 1 @ 1.
-	self assert: (cell data = 789).
+	self assert: cell data equals: 789.
 ]
 
 { #category : #'tests-strings' }
@@ -366,7 +368,7 @@ TabularExportImportTest >> testExport8ExportManyWorksheets [
 		wsheet at: (cellPositions at: i) putData: (values at: i).
 		wbk addSheet: wsheet].
 
-	fname7 ensureDelete.
+	fname7 asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname7.
 
 	wbkimported := XLSXImporter import: fname7 .

@@ -19,6 +19,7 @@ Class {
 TabularXLSXExportTest >> setUp [
     
 	| dir |
+	super setUp.
 	wsheetNumbersInRow1 := TabularWorksheet new.
 	wsheetNumbersInRow1
 		at: 1 @ 1 putData: 11;
@@ -27,13 +28,13 @@ TabularXLSXExportTest >> setUp [
 
      dir := FileLocator temp.  "use temporary directory to put the exported test files."
 
-    fname4 := dir / 'TabularConstructed4Exported.xlsx'. 
-    fname5 := dir / 'TabularConstructed5Exported.xlsx'.
-    fname6 := dir / 'TabularConstructed6Exported.xlsx'.
-    fname7 := dir / 'TabularConstructed7Exported.xlsx'.
-    fname8 := dir / 'TabularConstructed8ExportedInlineStringsAnalysis.xlsx'.
-    fname9 := dir / 'TabularConstructed9ExportedSharedStringsAnalysis.xlsx'.
-    fname10 :=dir /  'TabularConstructed10TwoWorksheets.xlsx'.
+    fname4 := (dir / 'TabularConstructed4Exported.xlsx') fullName. 
+    fname5 := (dir / 'TabularConstructed5Exported.xlsx')fullName.
+    fname6 := (dir / 'TabularConstructed6Exported.xlsx')fullName.
+    fname7 := (dir / 'TabularConstructed7Exported.xlsx')fullName.
+    fname8 := (dir / 'TabularConstructed8ExportedInlineStringsAnalysis.xlsx')fullName.
+    fname9 := (dir / 'TabularConstructed9ExportedSharedStringsAnalysis.xlsx' )fullName.
+    fname10 :=(dir /  'TabularConstructed10TwoWorksheets.xlsx')fullName.
 
 
 
@@ -48,7 +49,7 @@ TabularXLSXExportTest >> testExport4 [
 	self assert:  (wbk worksheets isEmpty).		
 	wsheet := wsheetNumbersInRow1.
 	wbk worksheets add: wsheet.
-	fname4  ensureDelete.
+	fname4 asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname4.
 	
 	"manual inspection shows that the exported file is fine"
@@ -64,7 +65,7 @@ TabularXLSXExportTest >> testExport5 [
 	wsheet := wsheetNumbersInRow1.
 	wsheet	at: 9 @ 9 putData: 99.		
 	wbk worksheets add: wsheet.
-	fname5  ensureDelete.
+	fname5 asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname5.
 	
 	"manual inspection shows that the exported file is fine"
@@ -82,7 +83,7 @@ TabularXLSXExportTest >> testExport6 [
 		at: 2 @ 1 putData: 'bbb';
 		at: 3 @ 1 putData: 'ccc'.	
 	wbk worksheets add: wsheet.
-	fname6  ensureDelete.
+	fname6  asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname6.	
 	"manual inspection shows that the exported file is fine"
 
@@ -102,7 +103,7 @@ TabularXLSXExportTest >> testExport7 [
       (wsheet cellAt: 1 @ 1) colspan: 1.
 			
 	wbk worksheets add: wsheet.
-	fname7  ensureDelete.
+	fname7 asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname7.
 	
 	"manual inspection shows that the exported file is fine"
@@ -125,7 +126,7 @@ TabularXLSXExportTest >> testExport7b [
       (wsheet cellAt: 'A1' asPoint) colspan: 1.
 			
 	wbk worksheets add: wsheet.
-	fname7 ensureDelete.
+	fname7 asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname7.
 	
 	"manual inspection shows that the exported file is fine"
@@ -142,7 +143,7 @@ TabularXLSXExportTest >> testExport8 [
 	wsheet := TabularWorksheet new.
 	wsheet at: 'A1' asPoint putData: myString.
 	wbk worksheets add: wsheet.
-	fname8  ensureDelete.
+	fname8 asFileReference  ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname8.
 	"ZipArchive new readFrom: fname8."
 	
@@ -166,7 +167,7 @@ TabularXLSXExportTest >> testExport9 [
 		at: 'A8' asPoint putData: myString;
 		at: 'A9' asPoint putData: myString.
 	wbk worksheets add: wsheet.
-	fname9  ensureDelete.
+	fname9  asFileReference ensureDelete.
 	TabularXLSXExport workbook: wbk fileName: fname9.
 	
 	"manual inspection shows that the exported file is fine"	

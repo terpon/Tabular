@@ -1,23 +1,3 @@
-"
-For the Class part:  State the name of the class with one line description: For example, I'm xxx the root of the hierarchy of visitor objects.
-
-For the Responsibility part: Three sentences about my main responsibility, what I'm doing, what services do I offer.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- what is the way to create instances is a plus.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-
-    Implementation Points
-"
 Class {
 	#name : #TabularDOCXExperimentalExportTest3,
 	#superclass : #TestCase,
@@ -81,7 +61,7 @@ archive := ZipArchive new
 
 aWorksheet := TabularWorksheet new.
 
-documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf-8').
+documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf8').
 archive addString: documentString as: 'word/document.xml'.
 
 archive writeToFileNamed: (FileLocator home / 'testExport3Write5.docx')
@@ -93,7 +73,7 @@ TabularDOCXExperimentalExportTest3 class >> example6Write [
 archive := ZipArchive new 
 			readFrom: self tabularTestTableWithoutDocumentXML readStream.
 aWorksheet := self sampleWorksheetWith2RowsAnd3Columns.
-documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf-8').
+documentString := ((TabularWorksheetWriterWordML  for: aWorksheet) convertToEncoding: 'utf8').
 
 archive addString: documentString as: 'word/document.xml'.
 archive writeToFileNamed: (FileLocator home / 'testExport3Write6.docx')
@@ -161,7 +141,7 @@ TabularDOCXExperimentalExportTest3 class >> write2 [
 aStream := self tabularTestTableWithoutDocumentXML readStream.
 archive := ZipArchive new readFrom: aStream.
 "archive removeMember: 'word/document.xml'."
-archive addString: (self documentString convertToEncoding: 'utf-8') as: 'word/document.xml'.
+archive addString: (self documentString convertToEncoding: 'utf8') as: 'word/document.xml'.
 
 archive writeToFileNamed: (FileLocator home / 'test.docx')
 
@@ -175,7 +155,7 @@ TabularDOCXExperimentalExportTest3 >> test1 [
 aWorkbook := TabularWorkbook new.
 aWorkbook addSheet: (self class sampleWorksheetWith2RowsAnd3Columns).
 
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'testExport3Write7.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'testExport3Write7.docx') fullName .
 ]
 
 { #category : #'as yet unclassified' }
@@ -186,7 +166,7 @@ TabularDOCXExperimentalExportTest3 >> test2ExportThreeColumnTable [
 aWorkbook := TabularWorkbook new.
 aWorkbook addSheet: (self class sampleWorksheetWith2RowsAnd3Columns).
 
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test2ExportThreeColumnTable.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test2ExportThreeColumnTable.docx') fullName .
 ]
 
 { #category : #'as yet unclassified' }
@@ -203,7 +183,7 @@ aWorksheet	 at: 1 @ 1 putData: 'one';
 		at: 4 @ 1 putData: 'four'.
 
 aWorkbook addSheet: aWorksheet.
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test3ExportFourColumnTable.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test3ExportFourColumnTable.docx') fullName .
 ]
 
 { #category : #'as yet unclassified' }
@@ -220,7 +200,7 @@ aWorksheet	 at: 1 @ 1 putData: 11;
 		at: 4 @ 1 putData: 31.
 
 aWorkbook addSheet: aWorksheet.
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test4Export3TableWithNumbers.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test4Export3TableWithNumbers.docx') fullName.
 ]
 
 { #category : #'as yet unclassified' }
@@ -240,5 +220,5 @@ aWorksheet	 at: 1 @ 1 putData: 11;
 		at: 4 @ 1 putData: 31.
 aWorksheet name: 'The second worksheet'.
 aWorkbook addSheet: aWorksheet.
-TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test5Export3WriteTwoWorksheets.docx').
+TabularDOCXExperimentalExport3 export: aWorkbook fileName: (FileLocator home / 'test5Export3WriteTwoWorksheets.docx') fullName .
 ]
