@@ -1,20 +1,15 @@
 # Tabular
-A migration of the project: http://ss3.gemtalksystems.com/ss/Tabular.html
+A set of classes to import and export spreadsheets in various file formats.
 
 # Installation
-
 To install this project run the following script in a playground.
 
-```st
+```Smalltalk
 Metacello new
 	baseline: 'Tabular';
-	repository: 'github://VincentBlondeau/Tabular/src';
+	repository: 'github://{user}/Tabular';
 	load
 ```
-
-Architectural diagram: http://www.gliffy.com/go/publish/6148167
-
-Roadmap: https://app.asana.com/0/16103295515099
 
 # XLSX format
 
@@ -33,3 +28,13 @@ http://blogs.msdn.com/b/brian_jones/archive/2007/05/29/simple-spreadsheetml-file
 0.3: XLSX export
 
 0.2: XLSX import
+
+A migration of the project: http://ss3.gemtalksystems.com/ss/Tabular.html
+
+## Misc links
+Links to resources needing some credentials.
+
+Architectural diagram: http://www.gliffy.com/go/publish/6148167
+
+Roadmap: https://app.asana.com/0/16103295515099
+
