@@ -82,7 +82,7 @@ XLSXImporter >> extractSharedStrings [
 	(archive memberNamed: 'xl/sharedStrings.xml')
 		ifNil: [ ^ sharedStrings := '' ]
 		ifNotNil: [ ^ sharedStrings := TabularXLSXSharedStringsParser
-				parse: (self streamArchive memberNamed: 'xl/sharedStrings.xml') ]
+				parse: (self streamArchiveNamed: 'xl/sharedStrings.xml') ]
 ]
 
 { #category : #extracting }
@@ -177,7 +177,7 @@ XLSXImporter >> resolveSharedStrings [
 
 { #category : #extracting }
 XLSXImporter >> streamArchiveNamed: aName [
-	encoding ifNil: [ encoding := ZnUTF8Encoder new ].
+	encoding ifNil: [ encoding := 'utf8' ].
 	^ (archive memberNamed: aName) contentStreamFromEncoding: encoding
 
 ]
